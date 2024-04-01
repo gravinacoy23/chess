@@ -113,7 +113,7 @@ class Chess:
                                 self.movements.select_piece(self.chess_board.board, mouse_pos)
                                 if self.movements.selected_piece is not None: selecting_piece = False
                             else: 
-                                self.movements.select_square(self.chess_board.board, mouse_pos)
+                                self.movements.select_square(mouse_pos)
                                 if self.movements.selected_square is not None:
                                     self.movements.move_piece(self.chess_board.board)
                                     self.chess_board.update_board(self.play_screen.screen)
