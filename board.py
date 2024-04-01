@@ -15,11 +15,10 @@ class Chess_board:
         self.king_image_black = pygame.image.load('media/elements/pieces/black/king.png')
         self.board_image = pygame.transform.scale(pygame.image.load('media/elements/board.png'), (700,675))
 
+    def initalize_board(self, screen):
         self.board = [None] * 8
         for col in range(0,8): 
             self.board[col] = [None]*8
-
-    def initalize_board(self, screen):
         for row in range(0,8):
             for col in range(0,8):
                 if row == 1: 

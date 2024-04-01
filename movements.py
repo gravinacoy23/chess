@@ -6,6 +6,7 @@ class Movements:
         self.selected_piece_pos = None
         self.selected_square = None
         self.previous_pos = None
+        self.turn = 'White'
 
     def select_piece(self, board, mouse_pos): 
         clicked_row, clicked_col = self._convert_mousepos_to_board(mouse_pos)
@@ -59,8 +60,15 @@ class Movements:
         return row,col
     
     def move_piece(self, board):
-        if self.selected_piece_pos != self.selected_square:
-            row_init, col_init = self.selected_piece_pos
-            row_to_move, col_to_move = self.selected_square
-            board[row_to_move][col_to_move] = self.selected_piece
-            board[row_init][col_init] = None
+        if (self.turn == 'White' and self.selected_piece[0:5] == "White") or (self.turn == 'Black' and self.selected_piece[0:5] == "Black"):
+            if self.selected_piece_pos != self.selected_square:
+                row_init, col_init = self.selected_piece_pos
+                row_to_move, col_to_move = self.selected_square
+                board[row_to_move][col_to_move] = self.selected_piece
+                board[row_init][col_init] = None
+                self.selected_piece = None
+                if self.turn == "White":
+                    self.turn = "Black"
+                else: 
+                    self.turn = "White"
+        
