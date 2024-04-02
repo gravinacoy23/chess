@@ -2,21 +2,43 @@ class Movements:
     def __init__(self) -> None:
         self.selected_piece = None
         self.selected_piece_pos = None
+        self.selected_square_owner = None
         self.selected_square = None
         self.previous_pos = None
         self.turn = "White"
 
     def select_piece(self, board, mouse_pos):
+        """Logic to select a piece depending on the state of the board (matrix) and the position on the mouse
+
+        Args:
+            board (Chess_board): Type defined on the board.py and has a list of lists with the current state of the board
+            mouse_pos (Tuple): defined on the main.py
+        """
         clicked_row, clicked_col = self._convert_mousepos_to_board(mouse_pos)
         if board[clicked_col][clicked_row] is not None:
             self.selected_piece = board[clicked_col][clicked_row]
             self.selected_piece_pos = (clicked_col, clicked_row)
 
-    def select_square(self, mouse_pos):
+    def select_square(self, board, mouse_pos):
+        """Takes care of selecting a square that we clicked, an empty square thanks to the logic of the main.py file.
+
+        Args:
+            board (Chess_board): defined on the board.py
+            mouse_pos (Tuple): defined on the main.py
+        """
         clicked_row, clicked_col = self._convert_mousepos_to_board(mouse_pos)
+        self.selected_square_owner = board[clicked_col][clicked_row]
         self.selected_square = (clicked_col, clicked_row)
 
     def _convert_mousepos_to_board(self, position):
+        """This is a match case statement to match the position of the mouse to a row col so that we can work with it on the functions of this class.
+
+        Args:
+            position (Tuple): Position of the mouse, defined on main.py
+
+        Returns:
+            tuple: return a tuple with the conversion of the position of the mouse.
+        """
         row, col = position
 
         match row:
@@ -58,16 +80,35 @@ class Movements:
         return row, col
 
     def move_piece(self, board):
+        """This contains the logic to move a piece somewhat raw, very few rules.
+        rules included: The turn of the player, you can only play on your turn. You can not move the piece to the same square that the piece is (for some reason this was deleting the pieces)
+        If you are going to move the piece to a square with another piece it cannot be from the same color. this function does allow captures but does not have any rule on how to prevent an
+        illegal capture.
+
+        Args:
+            board (_type_): _description_
+        """
         if (self.turn == "White" and self.selected_piece[0:5] == "White") or (
             self.turn == "Black" and self.selected_piece[0:5] == "Black"
         ):
             if self.selected_piece_pos != self.selected_square:
-                row_init, col_init = self.selected_piece_pos
-                row_to_move, col_to_move = self.selected_square
-                board[row_to_move][col_to_move] = self.selected_piece
-                board[row_init][col_init] = None
-                self.selected_piece = None
-                if self.turn == "White":
-                    self.turn = "Black"
-                else:
-                    self.turn = "White"
+                if self.selected_square_owner == None:
+                    row_init, col_init = self.selected_piece_pos
+                    row_to_move, col_to_move = self.selected_square
+                    board[row_to_move][col_to_move] = self.selected_piece
+                    board[row_init][col_init] = None
+                    self.selected_piece = None
+                    if self.turn == "White":
+                        self.turn = "Black"
+                    else:
+                        self.turn = "White"
+                elif self.selected_piece[0:5] != self.selected_square_owner[0:5]:
+                    row_init, col_init = self.selected_piece_pos
+                    row_to_move, col_to_move = self.selected_square
+                    board[row_to_move][col_to_move] = self.selected_piece
+                    board[row_init][col_init] = None
+                    self.selected_piece = None
+                    if self.turn == "White":
+                        self.turn = "Black"
+                    else:
+                        self.turn = "White"

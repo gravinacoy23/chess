@@ -103,6 +103,7 @@ class Chess:
         """Has the ability to initilize board state and move the pieces, no rules to move pieces yet"""
         self.play_screen.draw_play_screen()
         self.chess_board.initalize_board(self.play_screen.screen)
+        self.movements.turn = "White"
         selecting_piece = True
         while True:
             mouse_pos = pygame.mouse.get_pos()
@@ -129,7 +130,9 @@ class Chess:
                                 if self.movements.selected_piece is not None:
                                     selecting_piece = False
                             else:
-                                self.movements.select_square(mouse_pos)
+                                self.movements.select_square(
+                                    self.chess_board.board, mouse_pos
+                                )
                                 if self.movements.selected_square is not None:
                                     self.movements.move_piece(self.chess_board.board)
                                     self.chess_board.update_board(
