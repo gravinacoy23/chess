@@ -1,3 +1,6 @@
+from board import Chess_board
+
+
 class Movements:
     def __init__(self) -> None:
         self.selected_piece = None
@@ -6,6 +9,7 @@ class Movements:
         self.selected_square = None
         self.previous_pos = None
         self.turn = "White"
+        self.chess_board = Chess_board()
 
     def select_piece(self, board, mouse_pos):
         """Logic to select a piece depending on the state of the board (matrix) and the position on the mouse
@@ -106,6 +110,7 @@ class Movements:
                     row_init, col_init = self.selected_piece_pos
                     row_to_move, col_to_move = self.selected_square
                     board[row_to_move][col_to_move] = self.selected_piece
+                    self.chess_board.display_captured_pieces(self.selected_square_owner)
                     board[row_init][col_init] = None
                     self.selected_piece = None
                     if self.turn == "White":

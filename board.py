@@ -2,6 +2,7 @@ import pygame
 
 
 class Chess_board:
+    captured_pieces = list()
     def __init__(self) -> None:
         """initializes the images of all the pieces."""
         self.pawn_image_white = pygame.image.load(
@@ -51,6 +52,7 @@ class Chess_board:
         Args:
             screen (Play_screen or Bot_screen): this argument is intended to be received on the main file and these are subclases from the file screeens.
         """
+        Chess_board.captured_pieces.clear()
         self.board = [None] * 8
         for col in range(0, 8):
             self.board[col] = [None] * 8
@@ -169,3 +171,7 @@ class Chess_board:
                     screen.blit(
                         self.king_image_white, (col * 88 + 200, row * 84.2 + 52)
                     )
+
+    def display_captured_pieces(self, captured_piece, screen = None): 
+        Chess_board.captured_pieces.append(captured_piece)
+        print(self.captured_pieces)
