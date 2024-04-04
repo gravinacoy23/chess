@@ -59,17 +59,17 @@ class Play_screen(Screen):
             topleft=(197.5, 50)
         )
         self.back_button = Button((60, 20), "Back", self.font_text, "Black", "White")
-        self.background_clock_black = pygame.Surface((130,60))
+        self.background_clock_black = pygame.Surface((137,60))
         self.background_clock_black.fill('White')
-        self.background_clock_white = pygame.Surface((130,60))
+        self.background_clock_white = pygame.Surface((137,60))
         self.background_clock_white.fill('White')
 
     def draw_play_screen(self):
         """The purpose of this function is to blit our main elements to the screen, without the pieces, only the board itself and the text/buttons."""
         self.screen.blit(self.background_color, (0, 0))
         self.screen.blit(self.chess_board_blur_surface, (197.5, 50))
-        self.white_time = 90*60
-        self.black_time = 90*60
+        self.white_time = 120*60
+        self.black_time = 120*60
         self.back_button.update(self.screen)
 
     def check_for_input(self, position):
