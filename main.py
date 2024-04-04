@@ -79,6 +79,7 @@ class Chess:
         self.bot_screen.draw_play_screen()
         self.chess_board.initalize_board(self.bot_screen.screen)
         while True:
+            self.bot_screen.draw_clock(self.movements.turn, self.clock)
             mouse_pos = pygame.mouse.get_pos()
             # apply hovering effect and click action to all buttons
 
@@ -105,7 +106,9 @@ class Chess:
         self.chess_board.initalize_board(self.play_screen.screen)
         self.movements.turn = "White"
         selecting_piece = True
-        while True:
+        running = True
+        while running:
+            self.play_screen.draw_clock(self.movements.turn, self.clock)
             mouse_pos = pygame.mouse.get_pos()
             # apply hovering effect and click action to all buttons
 
@@ -122,6 +125,7 @@ class Chess:
                     if event.button == 1:
                         if self.bot_screen.back_button.check_for_input(mouse_pos):
                             self._main_menu()
+                            running = False
                         elif self.play_screen.check_for_input(mouse_pos):
                             if selecting_piece:
                                 self.movements.select_piece(
@@ -141,7 +145,7 @@ class Chess:
                                     selecting_piece = True
 
             # Draw all elements and update everything
-            pygame.display.update()
+            pygame.display.update() 
             self.clock.tick(60)
 
     def run_game(self):

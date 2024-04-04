@@ -58,16 +58,18 @@ class Play_screen(Screen):
         self.chess_board_rect = self.chess_board_blur_surface.get_rect(
             topleft=(197.5, 50)
         )
-        self.player1_text = self.font_text.render("Player 1:", True, "Black")
-        self.player2_text = self.font_text.render("Player 2:", True, "Black")
         self.back_button = Button((60, 20), "Back", self.font_text, "Black", "White")
+        self.background_clock_black = pygame.Surface((130,60))
+        self.background_clock_black.fill('White')
+        self.background_clock_white = pygame.Surface((130,60))
+        self.background_clock_white.fill('White')
 
     def draw_play_screen(self):
         """The purpose of this function is to blit our main elements to the screen, without the pieces, only the board itself and the text/buttons."""
         self.screen.blit(self.background_color, (0, 0))
         self.screen.blit(self.chess_board_blur_surface, (197.5, 50))
-        self.screen.blit(self.player2_text, (195, -7))
-        self.screen.blit(self.player1_text, (195, 715))
+        self.white_time = 90*60
+        self.black_time = 90*60
         self.back_button.update(self.screen)
 
     def check_for_input(self, position):
@@ -85,12 +87,33 @@ class Play_screen(Screen):
             self.chess_board_rect.top, self.chess_board_rect.bottom
         )
 
+    def draw_clock(self, turn, clock):
+        if turn == "White": 
+            self.white_time -= clock.get_time() / 1000
+            if self.white_time <= 0: 
+                self.white_time = 0
+        if turn == 'Black':
+            self.black_time -= clock.get_time() / 1000
+            if self.black_time <= 0: 
+                self.black_time = 0
+        
+        white_minutes = int(self.white_time // 60)
+        white_seconds = int(self.white_time % 60)
+        black_minutes = int(self.black_time // 60)
+        black_seconds = int(self.black_time % 60)
+
+        white_clock = self.font_text.render(f"{white_minutes:02d}:{white_seconds:02d}", True, "Black")
+        black_clock = self.font_text.render(f"{black_minutes:02d}:{black_seconds:02d}", True, "Black")
+
+        self.screen.blit(self.background_clock_black, (920,310))
+        self.screen.blit(self.background_clock_white, (920,410))
+        self.screen.blit(white_clock, (920, 410))
+        self.screen.blit(black_clock, (920, 310))
 
 class Bot_screen(Play_screen):
     def __init__(self) -> None:
         """The only purpose of this subclass (so far) is to have a different screen for the Bot mode with the word Bot instead of Player 2."""
         super().__init__()
-        self.player2_text = self.font_text.render("Bot", True, "Black")
 
 
 class Settings_screen(Screen):
