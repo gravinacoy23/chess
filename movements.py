@@ -110,7 +110,6 @@ class Movements:
                     row_init, col_init = self.selected_piece_pos
                     row_to_move, col_to_move = self.selected_square
                     board[row_to_move][col_to_move] = self.selected_piece
-                    self.chess_board.display_captured_pieces(self.selected_square_owner)
                     board[row_init][col_init] = None
                     self.selected_piece = None
                     if self.turn == "White":

@@ -172,6 +172,3 @@ class Chess_board:
                         self.king_image_white, (col * 88 + 200, row * 84.2 + 52)
                     )
 
-    def display_captured_pieces(self, captured_piece, screen = None): 
-        Chess_board.captured_pieces.append(captured_piece)
-        print(self.captured_pieces)
