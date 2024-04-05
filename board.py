@@ -3,6 +3,7 @@ import pygame
 
 class Chess_board:
     captured_pieces = list()
+
     def __init__(self) -> None:
         """initializes the images of all the pieces."""
         self.pawn_image_white = pygame.image.load(
@@ -171,4 +172,3 @@ class Chess_board:
                     screen.blit(
                         self.king_image_white, (col * 88 + 200, row * 84.2 + 52)
                     )
-

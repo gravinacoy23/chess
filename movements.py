@@ -116,7 +116,6 @@ class Movements:
                         self.turn = "Black"
                     else:
                         self.turn = "White"
-                else: 
+                else:
                     self.selected_piece = None
                     selecting_piece = True
-

@@ -59,17 +59,17 @@ class Play_screen(Screen):
             topleft=(197.5, 50)
         )
         self.back_button = Button((60, 20), "Back", self.font_text, "Black", "White")
-        self.background_clock_black = pygame.Surface((137,60))
-        self.background_clock_black.fill('White')
-        self.background_clock_white = pygame.Surface((137,60))
-        self.background_clock_white.fill('White')
+        self.background_clock_black = pygame.Surface((137, 60))
+        self.background_clock_black.fill("White")
+        self.background_clock_white = pygame.Surface((137, 60))
+        self.background_clock_white.fill("White")
 
     def draw_play_screen(self):
         """The purpose of this function is to blit our main elements to the screen, without the pieces, only the board itself and the text/buttons."""
         self.screen.blit(self.background_color, (0, 0))
         self.screen.blit(self.chess_board_blur_surface, (197.5, 50))
-        self.white_time = 120*60
-        self.black_time = 120*60
+        self.white_time = 120 * 60
+        self.black_time = 120 * 60
         self.back_button.update(self.screen)
 
     def check_for_input(self, position):
@@ -88,27 +88,39 @@ class Play_screen(Screen):
         )
 
     def draw_clock(self, turn, clock):
-        if turn == "White": 
+        """The purpose of this functions is to draw the clock on the play screen and count from 120 to zero as in clasical chess. In the future we will have a setting for
+        the clock to intiialize form a different time.
+
+        Args:
+            turn (str): Defined on  the movements.py and passes as an argument on the main.py
+            clock (Clock): Pygame data class, for the clock of the game.
+        """
+        if turn == "White":
             self.white_time -= clock.get_time() / 1000
-            if self.white_time <= 0: 
+            if self.white_time <= 0:
                 self.white_time = 0
-        if turn == 'Black':
+        if turn == "Black":
             self.black_time -= clock.get_time() / 1000
-            if self.black_time <= 0: 
+            if self.black_time <= 0:
                 self.black_time = 0
-        
+
         white_minutes = int(self.white_time // 60)
         white_seconds = int(self.white_time % 60)
         black_minutes = int(self.black_time // 60)
         black_seconds = int(self.black_time % 60)
 
-        white_clock = self.font_text.render(f"{white_minutes:02d}:{white_seconds:02d}", True, "Black")
-        black_clock = self.font_text.render(f"{black_minutes:02d}:{black_seconds:02d}", True, "Black")
+        white_clock = self.font_text.render(
+            f"{white_minutes:02d}:{white_seconds:02d}", True, "Black"
+        )
+        black_clock = self.font_text.render(
+            f"{black_minutes:02d}:{black_seconds:02d}", True, "Black"
+        )
 
-        self.screen.blit(self.background_clock_black, (920,310))
-        self.screen.blit(self.background_clock_white, (920,410))
+        self.screen.blit(self.background_clock_black, (920, 310))
+        self.screen.blit(self.background_clock_white, (920, 410))
         self.screen.blit(white_clock, (920, 410))
         self.screen.blit(black_clock, (920, 310))
+
 
 class Bot_screen(Play_screen):
     def __init__(self) -> None:

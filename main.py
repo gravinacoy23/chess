@@ -138,14 +138,16 @@ class Chess:
                                     self.chess_board.board, mouse_pos
                                 )
                                 if self.movements.selected_square is not None:
-                                    self.movements.move_piece(self.chess_board.board, selecting_piece)
+                                    self.movements.move_piece(
+                                        self.chess_board.board, selecting_piece
+                                    )
                                     self.chess_board.update_board(
                                         self.play_screen.screen
                                     )
                                     selecting_piece = True
 
             # Draw all elements and update everything
-            pygame.display.update() 
+            pygame.display.update()
             self.clock.tick(60)
 
     def run_game(self):
