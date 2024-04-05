@@ -59,9 +59,9 @@ class Play_screen(Screen):
             topleft=(197.5, 50)
         )
         self.back_button = Button((60, 20), "Back", self.font_text, "Black", "White")
-        self.background_clock_black = pygame.Surface((137, 60))
+        self.background_clock_black = pygame.Surface((187, 60))
         self.background_clock_black.fill("White")
-        self.background_clock_white = pygame.Surface((137, 60))
+        self.background_clock_white = pygame.Surface((187, 60))
         self.background_clock_white.fill("White")
 
     def draw_play_screen(self):
@@ -104,22 +104,24 @@ class Play_screen(Screen):
             if self.black_time <= 0:
                 self.black_time = 0
 
-        white_minutes = int(self.white_time // 60)
+        white_hours = int(self.white_time // 3600)
+        white_minutes = int((self.white_time % 3600) // 60)
         white_seconds = int(self.white_time % 60)
-        black_minutes = int(self.black_time // 60)
+        black_hours = int(self.black_time // 3600)
+        black_minutes = int((self.black_time % 3600) // 60)
         black_seconds = int(self.black_time % 60)
 
         white_clock = self.font_text.render(
-            f"{white_minutes:02d}:{white_seconds:02d}", True, "Black"
+            f"{white_hours:02d}:{white_minutes:02d}:{white_seconds:02d}", True, "Black"
         )
         black_clock = self.font_text.render(
-            f"{black_minutes:02d}:{black_seconds:02d}", True, "Black"
+            f"{black_hours:02d}:{black_minutes:02d}:{black_seconds:02d}", True, "Black"
         )
 
-        self.screen.blit(self.background_clock_black, (920, 310))
-        self.screen.blit(self.background_clock_white, (920, 410))
-        self.screen.blit(white_clock, (920, 410))
-        self.screen.blit(black_clock, (920, 310))
+        self.screen.blit(self.background_clock_black, (900, 310))
+        self.screen.blit(self.background_clock_white, (900, 410))
+        self.screen.blit(white_clock, (900, 410))
+        self.screen.blit(black_clock, (900, 310))
 
 
 class Bot_screen(Play_screen):
