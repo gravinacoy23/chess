@@ -59,9 +59,9 @@ class Play_screen(Screen):
             topleft=(197.5, 50)
         )
         self.back_button = Button((60, 20), "Back", self.font_text, "Black", "White")
-        self.background_clock_black = pygame.Surface((187, 60))
+        self.background_clock_black = pygame.Surface((190, 60))
         self.background_clock_black.fill("White")
-        self.background_clock_white = pygame.Surface((187, 60))
+        self.background_clock_white = pygame.Surface((190, 60))
         self.background_clock_white.fill("White")
 
     def draw_play_screen(self):
@@ -118,10 +118,10 @@ class Play_screen(Screen):
             f"{black_hours:02d}:{black_minutes:02d}:{black_seconds:02d}", True, "Black"
         )
 
-        self.screen.blit(self.background_clock_black, (900, 310))
-        self.screen.blit(self.background_clock_white, (900, 410))
-        self.screen.blit(white_clock, (900, 410))
-        self.screen.blit(black_clock, (900, 310))
+        self.screen.blit(self.background_clock_black, (905, 310))
+        self.screen.blit(self.background_clock_white, (905, 410))
+        self.screen.blit(white_clock, (905, 410))
+        self.screen.blit(black_clock, (905, 310))
 
 
 class Bot_screen(Play_screen):
