@@ -10,6 +10,8 @@ class Movements:
         self.previous_pos = None
         self.turn = "White"
         self.chess_board = Chess_board()
+        self.move_log = list()
+        self.piece_is_captured = False
 
     def select_piece(self, board, mouse_pos):
         """Logic to select a piece depending on the state of the board (matrix) and the position on the mouse
@@ -100,6 +102,8 @@ class Movements:
                     row_init, col_init = self.selected_piece_pos
                     row_to_move, col_to_move = self.selected_square
                     board[row_to_move][col_to_move] = self.selected_piece
+                    self.convert_move_to_chess_notation(self.selected_piece_pos, self.selected_square, self.selected_piece, self.piece_is_captured)
+                    print(self.move_log)
                     board[row_init][col_init] = None
                     self.selected_piece = None
                     if self.turn == "White":
@@ -107,9 +111,12 @@ class Movements:
                     else:
                         self.turn = "White"
                 elif self.selected_piece[0:5] != self.selected_square_owner[0:5]:
+                    self.piece_is_captured = True
                     row_init, col_init = self.selected_piece_pos
                     row_to_move, col_to_move = self.selected_square
                     board[row_to_move][col_to_move] = self.selected_piece
+                    self.convert_move_to_chess_notation(self.selected_piece_pos, self.selected_square, self.selected_piece, self.piece_is_captured)
+                    print(self.move_log)
                     board[row_init][col_init] = None
                     self.selected_piece = None
                     if self.turn == "White":
@@ -119,3 +126,24 @@ class Movements:
                 else:
                     self.selected_piece = None
                     selecting_piece = True
+
+    def convert_move_to_chess_notation(self, init_square, final_square, selected_piece, piece_is_captured):
+        column_letters = ["a", "b", "c", "d", "e", "f", "g", "h"]
+        row_numbers = [8,7,6,5,4,3,2,1]
+
+        init_row, init_col = init_square
+        final_row, final_col = final_square
+
+        init_square_chess = column_letters[init_col]+str(row_numbers[init_row])
+        final_square_chess = column_letters[final_col]+str(row_numbers[final_row])
+
+        if piece_is_captured: 
+            if selected_piece[6:] == 'Pawn': 
+                self.move_log.append(f'{init_square_chess[0]}x{final_square_chess}')
+            else: 
+                self.move_log.append(f'{selected_piece[6]}x{final_square_chess}')
+        else:
+            if selected_piece[6:] == 'Pawn': 
+                self.move_log.append(f"{final_square_chess}")
+            else: 
+                self.move_log.append(f"{selected_piece[6]}{final_square_chess}")
