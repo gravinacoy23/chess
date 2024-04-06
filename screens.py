@@ -68,8 +68,8 @@ class Play_screen(Screen):
         """The purpose of this function is to blit our main elements to the screen, without the pieces, only the board itself and the text/buttons."""
         self.screen.blit(self.background_color, (0, 0))
         self.screen.blit(self.chess_board_blur_surface, (197.5, 50))
-        self.white_time = 120 * 60
-        self.black_time = 120 * 60
+        self.white_time = 90 * 60
+        self.black_time = 90 * 60
         self.back_button.update(self.screen)
 
     def check_for_input(self, position):
