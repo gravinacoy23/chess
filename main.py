@@ -147,6 +147,8 @@ class Chess:
                                     )
                                     selecting_piece = True
 
+            self.play_screen.draw_move_log(self.movements.move_log_white, self.movements.move_log_black)
+
             # Draw all elements and update everything
             pygame.display.update()
             self.clock.tick(60)

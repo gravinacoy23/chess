@@ -12,6 +12,7 @@ class Screen:
         self.font_title = pygame.font.Font("media/font/font_bold.ttf", 200)
         self.font_subtitle = pygame.font.Font("media/font/font_bold.ttf", 100)
         self.font_text = pygame.font.Font("media/font/font_bold.ttf", 50)
+        self.font_move_log = pygame.font.Font("media/font/font_bold.ttf", 30)
 
         self.background_color = pygame.Surface((1100, 780))
         self.background_color.fill("darkslategray1")
@@ -122,6 +123,14 @@ class Play_screen(Screen):
         self.screen.blit(self.background_clock_white, (905, 410))
         self.screen.blit(white_clock, (905, 410))
         self.screen.blit(black_clock, (905, 310))
+
+    def draw_move_log(self, move_log_white, move_log_black):
+        for i, move in enumerate(move_log_white):
+            move_text = self.font_move_log.render(move, True, "Black")
+            self.screen.blit(move_text, (0,i*(50+5)+50))
+        for i, move in enumerate(move_log_black):
+            move_text = self.font_move_log.render(move, True, "Black")
+            self.screen.blit(move_text, (100,i*(50+5)+50))
 
 
 class Bot_screen(Play_screen):

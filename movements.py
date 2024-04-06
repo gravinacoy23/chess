@@ -10,7 +10,8 @@ class Movements:
         self.previous_pos = None
         self.turn = "White"
         self.chess_board = Chess_board()
-        self.move_log = list()
+        self.move_log_white = list()
+        self.move_log_black = list()
         self.piece_is_captured = False
 
     def select_piece(self, board, mouse_pos):
@@ -103,7 +104,6 @@ class Movements:
                     row_to_move, col_to_move = self.selected_square
                     board[row_to_move][col_to_move] = self.selected_piece
                     self.convert_move_to_chess_notation(self.selected_piece_pos, self.selected_square, self.selected_piece, self.piece_is_captured)
-                    print(self.move_log)
                     board[row_init][col_init] = None
                     self.selected_piece = None
                     if self.turn == "White":
@@ -116,7 +116,6 @@ class Movements:
                     row_to_move, col_to_move = self.selected_square
                     board[row_to_move][col_to_move] = self.selected_piece
                     self.convert_move_to_chess_notation(self.selected_piece_pos, self.selected_square, self.selected_piece, self.piece_is_captured)
-                    print(self.move_log)
                     board[row_init][col_init] = None
                     self.selected_piece = None
                     if self.turn == "White":
@@ -139,11 +138,23 @@ class Movements:
 
         if piece_is_captured: 
             if selected_piece[6:] == 'Pawn': 
-                self.move_log.append(f'{init_square_chess[0]}x{final_square_chess}')
+                if selected_piece [:5] == 'White':
+                    self.move_log_white.append(f'{init_square_chess[0]}x{final_square_chess}')
+                else:
+                    self.move_log_black.append(f'{init_square_chess[0]}x{final_square_chess}')
             else: 
-                self.move_log.append(f'{selected_piece[6]}x{final_square_chess}')
+                if selected_piece[:5] == 'White':
+                    self.move_log_white.append(f'{selected_piece[6]}x{final_square_chess}')
+                else:
+                    self.move_log_black.append(f'{selected_piece[6]}x{final_square_chess}')
         else:
             if selected_piece[6:] == 'Pawn': 
-                self.move_log.append(f"{final_square_chess}")
+                if selected_piece[:5] == 'White':
+                    self.move_log_white.append(f"{final_square_chess}")
+                else:
+                    self.move_log_black.append(f"{final_square_chess}")
             else: 
-                self.move_log.append(f"{selected_piece[6]}{final_square_chess}")
+                if selected_piece[:5] == 'White':
+                    self.move_log_white.append(f"{selected_piece[6]}{final_square_chess}")
+                else:
+                    self.move_log_black.append(f"{selected_piece[6]}{final_square_chess}")
