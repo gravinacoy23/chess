@@ -1,4 +1,4 @@
-from board import Chess_board
+from rules import Rules
 
 
 class Movements:
@@ -9,7 +9,6 @@ class Movements:
         self.selected_square = None
         self.previous_pos = None
         self.turn = "White"
-        self.chess_board = Chess_board()
         self.move_log_white = list()
         self.move_log_black = list()
         self.piece_is_captured = False
@@ -95,36 +94,40 @@ class Movements:
         Args:
             board (_type_): _description_
         """
-        if (self.turn == "White" and self.selected_piece[0:5] == "White") or (
-            self.turn == "Black" and self.selected_piece[0:5] == "Black"
-        ):
-            if self.selected_piece_pos != self.selected_square:
-                if self.selected_square_owner == None:
-                    row_init, col_init = self.selected_piece_pos
-                    row_to_move, col_to_move = self.selected_square
-                    board[row_to_move][col_to_move] = self.selected_piece
-                    self.convert_move_to_chess_notation(self.selected_piece_pos, self.selected_square, self.selected_piece, self.piece_is_captured)
-                    board[row_init][col_init] = None
-                    self.selected_piece = None
-                    if self.turn == "White":
-                        self.turn = "Black"
+        self.rules = Rules()
+        self.rules.define_valid_moves(self.selected_piece, self.selected_piece_pos, self.selected_square_owner, self.selected_square, board)
+        print(self.rules.valid_move(self.selected_square))
+        if self.rules.valid_move(self.selected_square):
+            if (self.turn == "White" and self.selected_piece[0:5] == "White") or (
+                self.turn == "Black" and self.selected_piece[0:5] == "Black"
+            ):
+                if self.selected_piece_pos != self.selected_square:
+                    if self.selected_square_owner == None:
+                        row_init, col_init = self.selected_piece_pos
+                        row_to_move, col_to_move = self.selected_square
+                        board[row_to_move][col_to_move] = self.selected_piece
+                        self.convert_move_to_chess_notation(self.selected_piece_pos, self.selected_square, self.selected_piece, self.piece_is_captured)
+                        board[row_init][col_init] = None
+                        self.selected_piece = None
+                        if self.turn == "White":
+                            self.turn = "Black"
+                        else:
+                            self.turn = "White"
+                    elif self.selected_piece[:5] != self.selected_square_owner[:5]:
+                        self.piece_is_captured = True
+                        row_init, col_init = self.selected_piece_pos
+                        row_to_move, col_to_move = self.selected_square
+                        board[row_to_move][col_to_move] = self.selected_piece
+                        self.convert_move_to_chess_notation(self.selected_piece_pos, self.selected_square, self.selected_piece, self.piece_is_captured)
+                        board[row_init][col_init] = None
+                        self.selected_piece = None
+                        if self.turn == "White":
+                            self.turn = "Black"
+                        else:
+                            self.turn = "White"
                     else:
-                        self.turn = "White"
-                elif self.selected_piece[0:5] != self.selected_square_owner[0:5]:
-                    self.piece_is_captured = True
-                    row_init, col_init = self.selected_piece_pos
-                    row_to_move, col_to_move = self.selected_square
-                    board[row_to_move][col_to_move] = self.selected_piece
-                    self.convert_move_to_chess_notation(self.selected_piece_pos, self.selected_square, self.selected_piece, self.piece_is_captured)
-                    board[row_init][col_init] = None
-                    self.selected_piece = None
-                    if self.turn == "White":
-                        self.turn = "Black"
-                    else:
-                        self.turn = "White"
-                else:
-                    self.selected_piece = None
-                    selecting_piece = True
+                        self.selected_piece = None
+                        selecting_piece = True
 
     def convert_move_to_chess_notation(self, init_square, final_square, selected_piece, piece_is_captured):
         column_letters = ["a", "b", "c", "d", "e", "f", "g", "h"]
