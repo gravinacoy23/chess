@@ -33,8 +33,8 @@ class Rules:
                         self.valid_moves.append(((selected_piece_row + 1), selected_piece_col))
                         self.valid_moves.append(((selected_piece_row + 2), selected_piece_col))
                     if selected_piece_col == 7: 
-                        if board[selected_piece_row - 1][selected_piece_col - 1] != None:
-                            self.valid_moves.append(((selected_piece_row - 1),(selected_piece_col - 1)))
+                        if board[selected_piece_row + 1][selected_piece_col - 1] != None:
+                            self.valid_moves.append(((selected_piece_row + 1),(selected_piece_col - 1)))
                         return
                     if board[selected_piece_row + 1][selected_piece_col + 1] != None:
                         self.valid_moves.append(((selected_piece_row + 1),(selected_piece_col + 1)))
