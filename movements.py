@@ -112,12 +112,14 @@ class Movements:
                         row_to_move, col_to_move = self.selected_square
                         board[row_to_move][col_to_move] = self.selected_piece
                         board[row_init][col_init] = None
-                        self.convert_move_to_chess_notation(
-                            self.selected_piece_pos,
-                            self.selected_square,
-                            self.selected_piece,
-                            self.piece_is_captured,
-                        )
+                        if not self.rules.en_passant:
+                            self.convert_move_to_chess_notation(
+                                self.selected_piece_pos,
+                                self.selected_square,
+                                self.selected_piece,
+                                self.piece_is_captured,
+                            )
+                        selected_piece_passant = self.selected_piece
                         self.selected_piece = None
                         self.selected_square_owner = None
                         if self.turn == "White":
@@ -143,6 +145,20 @@ class Movements:
                             self.turn = "Black"
                         else:
                             self.turn = "White"
+                    if self.rules.en_passant: 
+                        self.piece_is_captured == True
+                        self.selected_piece = selected_piece_passant
+                        if self.selected_piece[:5] == "White":
+                            board[row_to_move + 1][col_to_move] = None
+                        if self.selected_piece[:5] == "Black":
+                            board[row_to_move - 1][col_to_move] = None
+                        self.convert_move_to_chess_notation(
+                            self.selected_piece_pos,
+                            self.selected_square,
+                            self.selected_piece,
+                            piece_is_captured= True
+                        )
+                        self.selected_piece = None
 
                 else:
                     self.selected_piece = None

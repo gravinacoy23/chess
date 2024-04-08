@@ -2,6 +2,7 @@ class Rules:
     def __init__(self) -> None:
         """intializes the list to pass as an argument on a function."""
         self.valid_moves = list()
+        self.en_passant = False
 
     def _define_pawn_moves(
         self,
@@ -24,10 +25,12 @@ class Rules:
             player_color = "White"
             direction = -1
             start_row = 6
+            en_passant_row = 3
         else:
             player_color = "Black"
             direction = 1
             start_row = 1
+            en_passant_row = 4
 
         if board[selected_piece_row + direction][selected_piece_col] is None:
             self.valid_moves.append(
@@ -59,6 +62,15 @@ class Rules:
                         self.valid_moves.append(
                             (selected_piece_row + direction, capture_col)
                         )
+                elif (
+                    0 <= capture_col < 8
+                    and board[selected_piece_row + direction][capture_col] is None
+                    and selected_piece_row == en_passant_row 
+                ):
+                    self.valid_moves.append(
+                            (selected_piece_row+direction, capture_col)
+                        )
+                    self.en_passant = True
 
     def define_valid_moves(
         self,
