@@ -92,10 +92,16 @@ class Movements:
         illegal capture.
 
         Args:
-            board (_type_): _description_
+            board (List): Array of arrays.
         """
         self.rules = Rules()
-        self.rules.define_valid_moves(self.selected_piece, self.selected_piece_pos, self.selected_square_owner, self.selected_square, board)
+        self.rules.define_valid_moves(
+            self.selected_piece,
+            self.selected_piece_pos,
+            self.selected_square_owner,
+            self.selected_square,
+            board,
+        )
         if self.rules.valid_move(self.selected_square):
             if (self.turn == "White" and self.selected_piece[0:5] == "White") or (
                 self.turn == "Black" and self.selected_piece[0:5] == "Black"
@@ -106,7 +112,12 @@ class Movements:
                         row_to_move, col_to_move = self.selected_square
                         board[row_to_move][col_to_move] = self.selected_piece
                         board[row_init][col_init] = None
-                        self.convert_move_to_chess_notation(self.selected_piece_pos, self.selected_square, self.selected_piece, self.piece_is_captured)
+                        self.convert_move_to_chess_notation(
+                            self.selected_piece_pos,
+                            self.selected_square,
+                            self.selected_piece,
+                            self.piece_is_captured,
+                        )
                         self.selected_piece = None
                         self.selected_square_owner = None
                         if self.turn == "White":
@@ -119,7 +130,12 @@ class Movements:
                         row_to_move, col_to_move = self.selected_square
                         board[row_to_move][col_to_move] = self.selected_piece
                         board[row_init][col_init] = None
-                        self.convert_move_to_chess_notation(self.selected_piece_pos, self.selected_square, self.selected_piece, self.piece_is_captured)
+                        self.convert_move_to_chess_notation(
+                            self.selected_piece_pos,
+                            self.selected_square,
+                            self.selected_piece,
+                            self.piece_is_captured,
+                        )
                         self.selected_piece = None
                         self.selected_square_owner = None
                         self.piece_is_captured = False
@@ -133,35 +149,58 @@ class Movements:
                     self.selected_square_owner = None
                     selecting_piece = True
 
-    def convert_move_to_chess_notation(self, init_square, final_square, selected_piece, piece_is_captured):
+    def convert_move_to_chess_notation(
+        self, init_square, final_square, selected_piece, piece_is_captured
+    ):
+        """In order to display on the screen the move on a chess notation created this function to convert the moves from the board coordinates to a chess notation, appending them
+        to the movelog list for both black and white.
+
+        Args:
+            init_square (tupple): To disolay some of the notation, specially in pawns
+            final_square (tupple): for the notation to be accurate
+            selected_piece (Str): Again, for the notation
+            piece_is_captured (Bool): to determine if we should add an x beetween the piece and the final square ej. exe4 (pawn from the E column capturing on the e4 square)
+        """
         column_letters = ["a", "b", "c", "d", "e", "f", "g", "h"]
-        row_numbers = [8,7,6,5,4,3,2,1]
+        row_numbers = [8, 7, 6, 5, 4, 3, 2, 1]
 
         init_row, init_col = init_square
         final_row, final_col = final_square
 
-        init_square_chess = column_letters[init_col]+str(row_numbers[init_row])
-        final_square_chess = column_letters[final_col]+str(row_numbers[final_row])
+        init_square_chess = column_letters[init_col] + str(row_numbers[init_row])
+        final_square_chess = column_letters[final_col] + str(row_numbers[final_row])
 
-        if piece_is_captured: 
-            if selected_piece[6:] == 'Pawn': 
-                if selected_piece [:5] == 'White':
-                    self.move_log_white.append(f'{init_square_chess[0]}x{final_square_chess}')
+        if piece_is_captured:
+            if selected_piece[6:] == "Pawn":
+                if selected_piece[:5] == "White":
+                    self.move_log_white.append(
+                        f"{init_square_chess[0]}x{final_square_chess}"
+                    )
                 else:
-                    self.move_log_black.append(f'{init_square_chess[0]}x{final_square_chess}')
-            else: 
-                if selected_piece[:5] == 'White':
-                    self.move_log_white.append(f'{selected_piece[6]}x{final_square_chess}')
+                    self.move_log_black.append(
+                        f"{init_square_chess[0]}x{final_square_chess}"
+                    )
+            else:
+                if selected_piece[:5] == "White":
+                    self.move_log_white.append(
+                        f"{selected_piece[6]}x{final_square_chess}"
+                    )
                 else:
-                    self.move_log_black.append(f'{selected_piece[6]}x{final_square_chess}')
+                    self.move_log_black.append(
+                        f"{selected_piece[6]}x{final_square_chess}"
+                    )
         else:
-            if selected_piece[6:] == 'Pawn': 
-                if selected_piece[:5] == 'White':
+            if selected_piece[6:] == "Pawn":
+                if selected_piece[:5] == "White":
                     self.move_log_white.append(f"{final_square_chess}")
                 else:
                     self.move_log_black.append(f"{final_square_chess}")
-            else: 
-                if selected_piece[:5] == 'White':
-                    self.move_log_white.append(f"{selected_piece[6]}{final_square_chess}")
+            else:
+                if selected_piece[:5] == "White":
+                    self.move_log_white.append(
+                        f"{selected_piece[6]}{final_square_chess}"
+                    )
                 else:
-                    self.move_log_black.append(f"{selected_piece[6]}{final_square_chess}")
+                    self.move_log_black.append(
+                        f"{selected_piece[6]}{final_square_chess}"
+                    )

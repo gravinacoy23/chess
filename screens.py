@@ -125,12 +125,18 @@ class Play_screen(Screen):
         self.screen.blit(black_clock, (905, 310))
 
     def draw_move_log(self, move_log_white, move_log_black):
+        """This function takes care of drawing the move log on the screen
+
+        Args:
+            move_log_white (list): containing the move log for white
+            move_log_black (list): containing the move log for black
+        """
         for i, move in enumerate(move_log_white):
             move_text = self.font_move_log.render(move, True, "Black")
-            self.screen.blit(move_text, (0,i*(50+5)+50))
+            self.screen.blit(move_text, (0, i * (50 + 5) + 50))
         for i, move in enumerate(move_log_black):
             move_text = self.font_move_log.render(move, True, "Black")
-            self.screen.blit(move_text, (100,i*(50+5)+50))
+            self.screen.blit(move_text, (100, i * (50 + 5) + 50))
 
 
 class Bot_screen(Play_screen):
