@@ -65,11 +65,11 @@ class Rules:
                 elif (
                     0 <= capture_col < 8
                     and board[selected_piece_row + direction][capture_col] is None
-                    and selected_piece_row == en_passant_row 
+                    and selected_piece_row == en_passant_row
                 ):
                     self.valid_moves.append(
-                            (selected_piece_row+direction, capture_col)
-                        )
+                        (selected_piece_row + direction, capture_col)
+                    )
                     self.en_passant = True
 
     def define_valid_moves(

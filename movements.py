@@ -145,7 +145,7 @@ class Movements:
                             self.turn = "Black"
                         else:
                             self.turn = "White"
-                    if self.rules.en_passant: 
+                    if self.rules.en_passant:
                         self.piece_is_captured == True
                         self.selected_piece = selected_piece_passant
                         if self.selected_piece[:5] == "White":
@@ -156,7 +156,7 @@ class Movements:
                             self.selected_piece_pos,
                             self.selected_square,
                             self.selected_piece,
-                            piece_is_captured= True
+                            piece_is_captured=True,
                         )
                         self.selected_piece = None
 
