@@ -12,6 +12,8 @@ class Movements:
         self.move_log_white = list()
         self.move_log_black = list()
         self.piece_is_captured = False
+        self._color_slice = slice(None, 5)
+        self._piece_slice = slice(6, None)
 
     def select_piece(self, board, mouse_pos):
         """Logic to select a piece depending on the state of the board (matrix) and the position on the mouse
@@ -101,10 +103,12 @@ class Movements:
             self.selected_square_owner,
             self.selected_square,
             board,
+            self._color_slice,
+            self._piece_slice
         )
         if self.rules.valid_move(self.selected_square):
-            if (self.turn == "White" and self.selected_piece[0:5] == "White") or (
-                self.turn == "Black" and self.selected_piece[0:5] == "Black"
+            if (self.turn == "White" and self.selected_piece[self._color_slice] == "White") or (
+                self.turn == "Black" and self.selected_piece[self._color_slice] == "Black"
             ):
                 if self.selected_piece_pos != self.selected_square:
                     if self.selected_square_owner == None:
@@ -126,7 +130,7 @@ class Movements:
                             self.turn = "Black"
                         else:
                             self.turn = "White"
-                    elif self.selected_piece[:5] != self.selected_square_owner[:5]:
+                    elif self.selected_piece[self._color_slice] != self.selected_square_owner[self._color_slice]:
                         self.piece_is_captured = True
                         row_init, col_init = self.selected_piece_pos
                         row_to_move, col_to_move = self.selected_square
@@ -148,9 +152,9 @@ class Movements:
                     if self.rules.en_passant:
                         self.piece_is_captured == True
                         self.selected_piece = selected_piece_passant
-                        if self.selected_piece[:5] == "White":
+                        if self.selected_piece[self._color_slice] == "White":
                             board[row_to_move + 1][col_to_move] = None
-                        if self.selected_piece[:5] == "Black":
+                        if self.selected_piece[self._color_slice] == "Black":
                             board[row_to_move - 1][col_to_move] = None
                         self.convert_move_to_chess_notation(
                             self.selected_piece_pos,
@@ -187,8 +191,8 @@ class Movements:
         final_square_chess = column_letters[final_col] + str(row_numbers[final_row])
 
         if piece_is_captured:
-            if selected_piece[6:] == "Pawn":
-                if selected_piece[:5] == "White":
+            if selected_piece[self._piece_slice] == "Pawn":
+                if selected_piece[self._color_slice] == "White":
                     self.move_log_white.append(
                         f"{init_square_chess[0]}x{final_square_chess}"
                     )
@@ -206,8 +210,8 @@ class Movements:
                         f"{selected_piece[6]}x{final_square_chess}"
                     )
         else:
-            if selected_piece[6:] == "Pawn":
-                if selected_piece[:5] == "White":
+            if selected_piece[self._piece_slice] == "Pawn":
+                if selected_piece[self._color_slice] == "White":
                     self.move_log_white.append(f"{final_square_chess}")
                 else:
                     self.move_log_black.append(f"{final_square_chess}")

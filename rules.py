@@ -11,6 +11,7 @@ class Rules:
         selected_piece_col,
         selected_square_col,
         board,
+        color_slice
     ):
         """This method is used to determine the valid moves for a given pawn, wether a capture or a move forward.
 
@@ -21,7 +22,7 @@ class Rules:
             selected_square_col (int): column in which the selected square is (selected square to move)
             board (list): array of arrays.
         """
-        if selected_piece[:5] == "White":
+        if selected_piece[color_slice] == "White":
             player_color = "White"
             direction = -1
             start_row = 6
@@ -79,6 +80,8 @@ class Rules:
         selected_square_owner,
         selected_square,
         board,
+        color_slice,
+        piece_sliece
     ):
         """This is the function that will call the functions that contain the logic to move each piece.
 
@@ -92,13 +95,14 @@ class Rules:
         selected_piece_row, selected_piece_col = selected_piece_pos
         selected_square_row, selected_square_col = selected_square
 
-        if selected_piece[6:] == "Pawn":
+        if selected_piece[piece_sliece] == "Pawn":
             self._define_pawn_moves(
                 selected_piece,
                 selected_piece_row,
                 selected_piece_col,
                 selected_square_col,
                 board,
+                color_slice
             )
 
     def valid_move(self, selected_square):
