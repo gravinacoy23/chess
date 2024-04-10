@@ -6,15 +6,15 @@ class Rules:
 
     def _define_pawn_moves(
         self,
-        selected_piece,
-        selected_piece_row,
-        selected_piece_col,
-        selected_square_col,
-        board,
-        color_slice, 
-        possible_passant,
-        possible_passant_col
-    ):
+        selected_piece: str,
+        selected_piece_row: int,
+        selected_piece_col: int,
+        selected_square_col: int,
+        board: list,
+        color_slice: slice,
+        possible_passant: bool,
+        possible_passant_col: int,
+    ) -> None:
         """This method is used to determine the valid moves for a given pawn, wether a capture or a move forward.
 
         Args:
@@ -23,6 +23,9 @@ class Rules:
             selected_piece_col (int): number of the colmun in which the piece currently is.
             selected_square_col (int): column in which the selected square is (selected square to move)
             board (list): array of arrays.
+            color_slice (slice): Contains a slice object that references the color of the piece string in format "White Pawn"
+            possible_passant (bool): Bool that indicates if the en passant is posible in the next turn depending on the previous move
+            possible_passant_col (int): The column in which the possible enpassant is located.
         """
         if selected_piece[color_slice] == "White":
             player_color = "White"
@@ -79,27 +82,30 @@ class Rules:
                     )
                     self.en_passant = True
                     
-
     def define_valid_moves(
         self,
-        selected_piece,
-        selected_piece_pos,
-        selected_square_owner,
-        selected_square,
-        board,
-        color_slice,
-        piece_sliece, 
-        possible_passant,
-        possible_passant_col
+        selected_piece: str,
+        selected_piece_pos: tuple,
+        selected_square_owner: str,
+        selected_square: tuple,
+        board: list,
+        color_slice: slice,
+        piece_sliece: slice, 
+        possible_passant: bool,
+        possible_passant_col: int, 
     ):
         """This is the function that will call the functions that contain the logic to move each piece.
 
         Args:
             selected_piece (str): selected_piece (str): a tring containing the name of the piece ej. White pawn
-            selected_piece_pos (tupple): a tupple containing the position on the board from the selected piece to move.
+            selected_piece_pos (tuple): a tupple containing the position on the board from the selected piece to move.
             selected_square_owner (Str): A string containing the name of the owner of selected square to move.
-            selected_square (tupple): a tupple containing the position on the board of the selected square to move.
+            selected_square (tuple): a tupple containing the position on the board of the selected square to move.
             board (List): array of arrays with the current state of the board.
+            color_slice (slice): Contains a slice object that references the color of the piece string in format "White Pawn"
+            piece_slice (slice): Contains a slice object that references the Piece of the piece string in format "White Pawn"
+            possible_passant (bool): Bool that indicates if the en passant is posible in the next turn depending on the previous move
+            possible_passant_col (int): The column in which the possible enpassant is located.
         """
         selected_piece_row, selected_piece_col = selected_piece_pos
         selected_square_row, selected_square_col = selected_square
@@ -111,12 +117,12 @@ class Rules:
                 selected_piece_col,
                 selected_square_col,
                 board,
-                color_slice, 
+                color_slice,
                 possible_passant,
-                possible_passant_col
+                possible_passant_col,
             )
 
-    def valid_move(self, selected_square):
+    def valid_move(self, selected_square: tuple) -> bool:
         """this functions checks if the selected square to move is contained within the list of valid moves, calles to excetue the move_piece function on the movements.py
 
         Args:

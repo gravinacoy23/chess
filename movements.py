@@ -16,8 +16,9 @@ class Movements:
         self._piece_slice = slice(6, None)
         self.possible_passant = False
         self.possible_passant_col = None
+        self.passant_to_capture = None
 
-    def select_piece(self, board, mouse_pos):
+    def select_piece(self, board: list, mouse_pos: tuple) -> None:
         """Logic to select a piece depending on the state of the board (matrix) and the position on the mouse
 
         Args:
@@ -29,7 +30,7 @@ class Movements:
             self.selected_piece = board[clicked_col][clicked_row]
             self.selected_piece_pos = (clicked_col, clicked_row)
 
-    def select_square(self, board, mouse_pos):
+    def select_square(self, board: list, mouse_pos: tuple) -> None:
         """Takes care of selecting a square that we clicked, an empty square thanks to the logic of the main.py file.
 
         Args:
@@ -40,7 +41,7 @@ class Movements:
         self.selected_square_owner = board[clicked_col][clicked_row]
         self.selected_square = (clicked_col, clicked_row)
 
-    def _convert_mousepos_to_board(self, position):
+    def _convert_mousepos_to_board(self, position: tuple) -> tuple:
         """This is a match case statement to match the position of the mouse to a row col so that we can work with it on the functions of this class.
 
         Args:
@@ -89,7 +90,7 @@ class Movements:
 
         return row, col
 
-    def move_piece(self, board, selecting_piece):
+    def move_piece(self, board: list, selecting_piece: bool) -> None:
         """This contains the logic to move a piece somewhat raw, very few rules.
         rules included: The turn of the player, you can only play on your turn. You can not move the piece to the same square that the piece is (for some reason this was deleting the pieces)
         If you are going to move the piece to a square with another piece it cannot be from the same color. this function does allow captures but does not have any rule on how to prevent an
@@ -108,7 +109,7 @@ class Movements:
             self._color_slice,
             self._piece_slice, 
             self.possible_passant,
-            self.possible_passant_col
+            self.possible_passant_col,
         )
         if self.rules.valid_move(self.selected_square):
             if (self.turn == "White" and self.selected_piece[self._color_slice] == "White") or (
@@ -127,9 +128,10 @@ class Movements:
                                 self.selected_piece,
                                 self.piece_is_captured,
                             )
-                        if row_to_move + 2 == row_init or row_to_move - 2 == row_init: 
-                            self.possible_passant = True
-                            self.possible_passant_col = col_init
+                        if self.selected_piece[self._piece_slice] == 'Pawn':
+                            if row_to_move + 2 == row_init or row_to_move - 2 == row_init: 
+                                self.possible_passant = True
+                                self.possible_passant_col = col_init
                         else: 
                             self.possible_passant = False
                         selected_piece_passant = self.selected_piece
@@ -179,8 +181,8 @@ class Movements:
                     selecting_piece = True
 
     def convert_move_to_chess_notation(
-        self, init_square, final_square, selected_piece, piece_is_captured
-    ):
+        self, init_square: tuple, final_square: tuple, selected_piece: str, piece_is_captured: bool
+    ) -> None:
         """In order to display on the screen the move on a chess notation created this function to convert the moves from the board coordinates to a chess notation, appending them
         to the movelog list for both black and white.
 

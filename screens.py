@@ -73,7 +73,7 @@ class Play_screen(Screen):
         self.black_time = 90 * 60
         self.back_button.update(self.screen)
 
-    def check_for_input(self, position):
+    def check_for_input(self, position: tuple) -> bool:
         """The purpose of this function is to check whether or not a postion in specific is within the board, in this case, the position of the mouse.
 
         Args:
@@ -88,7 +88,7 @@ class Play_screen(Screen):
             self.chess_board_rect.top, self.chess_board_rect.bottom
         )
 
-    def draw_clock(self, turn, clock):
+    def draw_clock(self, turn: str, clock) -> None:
         """The purpose of this functions is to draw the clock on the play screen and count from 120 to zero as in clasical chess. In the future we will have a setting for
         the clock to intiialize form a different time.
 
@@ -124,7 +124,7 @@ class Play_screen(Screen):
         self.screen.blit(white_clock, (905, 410))
         self.screen.blit(black_clock, (905, 310))
 
-    def draw_move_log(self, move_log_white, move_log_black):
+    def draw_move_log(self, move_log_white: list, move_log_black: list) -> None:
         """This function takes care of drawing the move log on the screen
 
         Args:

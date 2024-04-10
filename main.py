@@ -13,7 +13,7 @@ class Chess:
         pygame.init()
         self.clock = pygame.time.Clock()
 
-    def _main_menu(self):
+    def _main_menu(self) -> None:
         """this functions is called at the begining of the game to initialize the GUI, uses the object of the screen file Main_menu_screen"""
         self.menu.screen.fill("black")
         self.menu.screen.fill("darkslategray1")
@@ -46,7 +46,7 @@ class Chess:
             pygame.display.update()
             self.clock.tick(60)
 
-    def _settings_mode(self):
+    def _settings_mode(self) -> None:
         """initilizes setting screen, loops over buttons to apply effects."""
         self.menu.screen.fill("black")
         self.menu.screen.fill("darkslategray1")
@@ -74,7 +74,7 @@ class Chess:
             pygame.display.update()
             self.clock.tick(60)
 
-    def _bot_mode(self):
+    def _bot_mode(self) -> None:
         """Initialize the Bot screen, calling the method to draw the pieces and the board, no functionality to move pieces yet."""
         self.bot_screen.draw_play_screen()
         self.chess_board.initalize_board(self.bot_screen.screen)
@@ -100,7 +100,7 @@ class Chess:
             pygame.display.update()
             self.clock.tick(60)
 
-    def _local_mode(self):
+    def _local_mode(self) -> None:
         """Has the ability to initilize board state and move the pieces, no rules to move pieces yet"""
         self.play_screen.draw_play_screen()
         self.chess_board.initialize_board(self.play_screen.screen)
@@ -155,7 +155,7 @@ class Chess:
             pygame.display.update()
             self.clock.tick(60)
 
-    def run_game(self):
+    def run_game(self) -> None:
         """Function that runs the game calling the main menu method and intializing objects to use throughout the program."""
         self.menu = Main_menu_screen()
         self.play_screen = Play_screen()
