@@ -11,7 +11,9 @@ class Rules:
         selected_piece_col,
         selected_square_col,
         board,
-        color_slice
+        color_slice, 
+        possible_passant,
+        possible_passant_col
     ):
         """This method is used to determine the valid moves for a given pawn, wether a capture or a move forward.
 
@@ -54,7 +56,7 @@ class Rules:
                 capture_col = selected_piece_col + diagonal_col
                 if (
                     0 <= capture_col < 8
-                    and board[selected_piece_row + direction][capture_col]
+                    and board[selected_piece_row + direction][capture_col] is not None
                 ):
                     if (
                         board[selected_piece_row + direction][capture_col][:5]
@@ -63,15 +65,20 @@ class Rules:
                         self.valid_moves.append(
                             (selected_piece_row + direction, capture_col)
                         )
+                        self.en_passant = False
+                        possible_passant = False 
+                        return
                 elif (
                     0 <= capture_col < 8
                     and board[selected_piece_row + direction][capture_col] is None
                     and selected_piece_row == en_passant_row
+                    and possible_passant
                 ):
                     self.valid_moves.append(
-                        (selected_piece_row + direction, capture_col)
+                        (selected_piece_row + direction, possible_passant_col)
                     )
                     self.en_passant = True
+                    
 
     def define_valid_moves(
         self,
@@ -81,7 +88,9 @@ class Rules:
         selected_square,
         board,
         color_slice,
-        piece_sliece
+        piece_sliece, 
+        possible_passant,
+        possible_passant_col
     ):
         """This is the function that will call the functions that contain the logic to move each piece.
 
@@ -102,7 +111,9 @@ class Rules:
                 selected_piece_col,
                 selected_square_col,
                 board,
-                color_slice
+                color_slice, 
+                possible_passant,
+                possible_passant_col
             )
 
     def valid_move(self, selected_square):

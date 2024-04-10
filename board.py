@@ -46,7 +46,7 @@ class Chess_board:
             pygame.image.load("media/elements/board.png"), (700, 675)
         )
 
-    def initalize_board(self, screen):
+    def initialize_board(self, screen):
         """The purpose of this function is to initialize the matrix of the board with the pieces on their iniital position, taking care of
         both asigning the iniital position a bliting the image to the screen.
 

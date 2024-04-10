@@ -14,6 +14,8 @@ class Movements:
         self.piece_is_captured = False
         self._color_slice = slice(None, 5)
         self._piece_slice = slice(6, None)
+        self.possible_passant = False
+        self.possible_passant_col = None
 
     def select_piece(self, board, mouse_pos):
         """Logic to select a piece depending on the state of the board (matrix) and the position on the mouse
@@ -104,7 +106,9 @@ class Movements:
             self.selected_square,
             board,
             self._color_slice,
-            self._piece_slice
+            self._piece_slice, 
+            self.possible_passant,
+            self.possible_passant_col
         )
         if self.rules.valid_move(self.selected_square):
             if (self.turn == "White" and self.selected_piece[self._color_slice] == "White") or (
@@ -123,6 +127,11 @@ class Movements:
                                 self.selected_piece,
                                 self.piece_is_captured,
                             )
+                        if row_to_move + 2 == row_init or row_to_move - 2 == row_init: 
+                            self.possible_passant = True
+                            self.possible_passant_col = col_init
+                        else: 
+                            self.possible_passant = False
                         selected_piece_passant = self.selected_piece
                         self.selected_piece = None
                         self.selected_square_owner = None

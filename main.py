@@ -103,7 +103,7 @@ class Chess:
     def _local_mode(self):
         """Has the ability to initilize board state and move the pieces, no rules to move pieces yet"""
         self.play_screen.draw_play_screen()
-        self.chess_board.initalize_board(self.play_screen.screen)
+        self.chess_board.initialize_board(self.play_screen.screen)
         self.movements = Movements()
         self.movements.turn = "White"
         selecting_piece = True
