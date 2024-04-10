@@ -132,6 +132,8 @@ class Movements:
                             if row_to_move + 2 == row_init or row_to_move - 2 == row_init: 
                                 self.possible_passant = True
                                 self.possible_passant_col = col_init
+                            else: 
+                                self.possible_passant = False
                         else: 
                             self.possible_passant = False
                         selected_piece_passant = self.selected_piece
