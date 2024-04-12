@@ -69,7 +69,7 @@ class Rules:
                             (selected_piece_row + direction, capture_col)
                         )
                         self.en_passant = False
-                        possible_passant = False 
+                        possible_passant = False
                         return
                 elif (
                     0 <= capture_col < 8
@@ -81,7 +81,21 @@ class Rules:
                         (selected_piece_row + direction, possible_passant_col)
                     )
                     self.en_passant = True
-                    
+
+    def _define_horizontal_moves(
+        self,
+        selected_piece: str,
+        selected_piece_row: int,
+        selected_piece_col: int,
+        selected_square_col: int,
+        board: list,
+        color_slice: slice,
+    ):
+        if selected_piece[color_slice] == "White":
+            player_color = "White"
+        else:
+            player_color = "Black"
+
     def define_valid_moves(
         self,
         selected_piece: str,
@@ -90,9 +104,9 @@ class Rules:
         selected_square: tuple,
         board: list,
         color_slice: slice,
-        piece_sliece: slice, 
+        piece_sliece: slice,
         possible_passant: bool,
-        possible_passant_col: int, 
+        possible_passant_col: int,
     ):
         """This is the function that will call the functions that contain the logic to move each piece.
 
