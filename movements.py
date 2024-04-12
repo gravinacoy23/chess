@@ -107,13 +107,17 @@ class Movements:
             self.selected_square,
             board,
             self._color_slice,
-            self._piece_slice, 
+            self._piece_slice,
             self.possible_passant,
             self.possible_passant_col,
         )
         if self.rules.valid_move(self.selected_square):
-            if (self.turn == "White" and self.selected_piece[self._color_slice] == "White") or (
-                self.turn == "Black" and self.selected_piece[self._color_slice] == "Black"
+            if (
+                self.turn == "White"
+                and self.selected_piece[self._color_slice] == "White"
+            ) or (
+                self.turn == "Black"
+                and self.selected_piece[self._color_slice] == "Black"
             ):
                 if self.selected_piece_pos != self.selected_square:
                     if self.selected_square_owner == None:
@@ -128,13 +132,16 @@ class Movements:
                                 self.selected_piece,
                                 self.piece_is_captured,
                             )
-                        if self.selected_piece[self._piece_slice] == 'Pawn':
-                            if row_to_move + 2 == row_init or row_to_move - 2 == row_init: 
+                        if self.selected_piece[self._piece_slice] == "Pawn":
+                            if (
+                                row_to_move + 2 == row_init
+                                or row_to_move - 2 == row_init
+                            ):
                                 self.possible_passant = True
                                 self.possible_passant_col = col_init
-                            else: 
+                            else:
                                 self.possible_passant = False
-                        else: 
+                        else:
                             self.possible_passant = False
                         selected_piece_passant = self.selected_piece
                         self.selected_piece = None
@@ -143,7 +150,10 @@ class Movements:
                             self.turn = "Black"
                         else:
                             self.turn = "White"
-                    elif self.selected_piece[self._color_slice] != self.selected_square_owner[self._color_slice]:
+                    elif (
+                        self.selected_piece[self._color_slice]
+                        != self.selected_square_owner[self._color_slice]
+                    ):
                         self.piece_is_captured = True
                         row_init, col_init = self.selected_piece_pos
                         row_to_move, col_to_move = self.selected_square
@@ -183,7 +193,11 @@ class Movements:
                     selecting_piece = True
 
     def convert_move_to_chess_notation(
-        self, init_square: tuple, final_square: tuple, selected_piece: str, piece_is_captured: bool
+        self,
+        init_square: tuple,
+        final_square: tuple,
+        selected_piece: str,
+        piece_is_captured: bool,
     ) -> None:
         """In order to display on the screen the move on a chess notation created this function to convert the moves from the board coordinates to a chess notation, appending them
         to the movelog list for both black and white.
