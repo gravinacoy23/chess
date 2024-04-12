@@ -71,7 +71,6 @@ class Rules:
                         print(self.valid_moves)
                         self.en_passant = False
                         possible_passant = False 
-                        return
                 elif (
                     0 <= capture_col < 8
                     and board[selected_piece_row + direction][capture_col] is None
