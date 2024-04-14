@@ -181,7 +181,6 @@ class Rules:
                     return
                 elif piece_at_square[color_slice] != selected_piece[color_slice]: 
                     self.valid_moves.append((current_row, current_col))
-                    print(self.valid_moves)
                     return
             else: 
                 return
