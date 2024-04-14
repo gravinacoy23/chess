@@ -90,6 +90,16 @@ class Rules:
         board: list,
         color_slice: slice,
     ):
+        """The purpose of this function is to define all the valid horizontal moves, not valid for the king, only for rook and queen.
+
+        Args:
+            selected_piece (str): String with the name of the selected piece, ej: White Pawn
+            selected_piece_row (int): Number with the current row
+            selected_piece_col (int): number with the current col
+            selected_square_col (int): number of the col to move
+            board (list): array of arrays of the current board state.
+            color_slice (slice): slice object to access the color of the piece.
+        """
         current_col = selected_piece_col
         if current_col > selected_square_col:
             direction = -1
