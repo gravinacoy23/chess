@@ -90,10 +90,29 @@ class Rules:
         board: list,
         color_slice: slice,
     ):
-        if selected_piece[color_slice] == "White":
-            player_color = "White"
+        current_col = selected_piece_col
+        if current_col > selected_square_col:
+            direction = -1
         else:
-            player_color = "Black"
+            direction = +1
+        while current_col <= selected_square_col or current_col >= selected_square_col:
+            current_col += direction
+            if 0 <= current_col < 8:
+                if board[selected_piece_row][current_col] == None:
+                    self.valid_moves.append((selected_piece_row, current_col))
+                elif (
+                    board[selected_piece_row][current_col][color_slice]
+                    == selected_piece[color_slice]
+                ):
+                    return
+                elif (
+                    board[selected_piece_row][current_col][color_slice]
+                    != selected_piece[color_slice]
+                ):
+                    self.valid_moves.append((selected_piece_row, current_col))
+                    return
+            else:
+                return
 
     def define_valid_moves(
         self,
@@ -122,7 +141,6 @@ class Rules:
         """
         selected_piece_row, selected_piece_col = selected_piece_pos
         selected_square_row, selected_square_col = selected_square
-
         if selected_piece[piece_sliece] == "Pawn":
             self._define_pawn_moves(
                 selected_piece,
@@ -134,6 +152,16 @@ class Rules:
                 possible_passant,
                 possible_passant_col,
             )
+        elif selected_piece[piece_sliece] == "Rook":
+            if selected_piece_row == selected_square_row:
+                self._define_horizontal_moves(
+                    selected_piece,
+                    selected_piece_row,
+                    selected_piece_col,
+                    selected_square_col,
+                    board,
+                    color_slice,
+                )
 
     def valid_move(self, selected_square: tuple) -> bool:
         """this functions checks if the selected square to move is contained within the list of valid moves, calles to excetue the move_piece function on the movements.py
