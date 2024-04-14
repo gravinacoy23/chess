@@ -81,14 +81,17 @@ class Rules:
                     )
                     self.en_passant = True
 
-    def _define_horizontal_moves(
+    def _define_horizontal_vertical_moves(
         self,
         selected_piece: str,
         selected_piece_row: int,
         selected_piece_col: int,
+        selected_square_row: int,
         selected_square_col: int,
         board: list,
         color_slice: slice,
+        is_horizontal: bool,
+        is_vertical: bool,
     ):
         """The purpose of this function is to define all the valid horizontal moves, not valid for the king, only for rook and queen.
 
@@ -96,30 +99,47 @@ class Rules:
             selected_piece (str): String with the name of the selected piece, ej: White Pawn
             selected_piece_row (int): Number with the current row
             selected_piece_col (int): number with the current col
+            selected_square_row (int): number of the row to move
             selected_square_col (int): number of the col to move
             board (list): array of arrays of the current board state.
             color_slice (slice): slice object to access the color of the piece.
+            is_horizontal (bool): True if current move is a horizontal move.
+            is_vertical (bool): True if current move is a vertical move
         """
-        current_col = selected_piece_col
-        if current_col > selected_square_col:
-            direction = -1
+
+        if is_horizontal:
+            current_index = selected_piece_col
+            target_index = selected_square_col
+            fixed_index = selected_piece_row
+        elif is_vertical:
+            current_index = selected_piece_row
+            target_index = selected_square_row
+            fixed_index = selected_piece_col
         else:
-            direction = +1
-        while current_col <= selected_square_col or current_col >= selected_square_col:
-            current_col += direction
-            if 0 <= current_col < 8:
-                if board[selected_piece_row][current_col] == None:
-                    self.valid_moves.append((selected_piece_row, current_col))
-                elif (
-                    board[selected_piece_row][current_col][color_slice]
-                    == selected_piece[color_slice]
-                ):
+            return
+
+        direction = -1 if current_index > target_index else 1
+
+        while current_index != target_index + direction:
+            current_index += direction
+
+            if is_horizontal:
+                current_square = (fixed_index, current_index)
+            elif is_vertical:
+                current_square = (current_index, fixed_index)
+
+            if 0 <= current_index < 8:
+                if is_horizontal:
+                    piece_at_square = board[fixed_index][current_index]
+                elif is_vertical:
+                    piece_at_square = board[current_index][fixed_index]
+
+                if piece_at_square == None:
+                    self.valid_moves.append(current_square)
+                elif piece_at_square == selected_piece[color_slice]:
                     return
-                elif (
-                    board[selected_piece_row][current_col][color_slice]
-                    != selected_piece[color_slice]
-                ):
-                    self.valid_moves.append((selected_piece_row, current_col))
+                elif piece_at_square != selected_piece[color_slice]:
+                    self.valid_moves.append(current_square)
                     return
             else:
                 return
@@ -151,6 +171,9 @@ class Rules:
         """
         selected_piece_row, selected_piece_col = selected_piece_pos
         selected_square_row, selected_square_col = selected_square
+        is_horizontal = False
+        is_vertical = False
+
         if selected_piece[piece_sliece] == "Pawn":
             self._define_pawn_moves(
                 selected_piece,
@@ -164,14 +187,21 @@ class Rules:
             )
         elif selected_piece[piece_sliece] == "Rook":
             if selected_piece_row == selected_square_row:
-                self._define_horizontal_moves(
-                    selected_piece,
-                    selected_piece_row,
-                    selected_piece_col,
-                    selected_square_col,
-                    board,
-                    color_slice,
-                )
+                is_horizontal = True
+            elif selected_piece_col == selected_square_col:
+                is_vertical = True
+
+            self._define_horizontal_vertical_moves(
+                selected_piece,
+                selected_piece_row,
+                selected_piece_col,
+                selected_square_row,
+                selected_square_col,
+                board,
+                color_slice,
+                is_horizontal,
+                is_vertical,
+            )
 
     def valid_move(self, selected_square: tuple) -> bool:
         """this functions checks if the selected square to move is contained within the list of valid moves, calles to excetue the move_piece function on the movements.py
