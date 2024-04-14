@@ -216,6 +216,11 @@ class Rules:
         is_horizontal = False
         is_vertical = False
 
+        if selected_piece_row == selected_square_row:
+                is_horizontal = True
+        elif selected_piece_col == selected_square_col:
+                is_vertical = True
+
         if selected_piece[piece_sliece] == "Pawn":
             self._define_pawn_moves(
                 selected_piece,
@@ -228,11 +233,6 @@ class Rules:
                 possible_passant_col,
             )
         elif selected_piece[piece_sliece] == "Rook":
-            if selected_piece_row == selected_square_row:
-                is_horizontal = True
-            elif selected_piece_col == selected_square_col:
-                is_vertical = True
-
             self._define_horizontal_vertical_moves(
                 selected_piece,
                 selected_piece_row,
@@ -257,7 +257,26 @@ class Rules:
                 color_slice
             )
         elif selected_piece[piece_sliece] == 'Queen': 
-            pass
+            self._define_horizontal_vertical_moves(
+                selected_piece,
+                selected_piece_row,
+                selected_piece_col,
+                selected_square_row,
+                selected_square_col,
+                board,
+                color_slice,
+                is_horizontal,
+                is_vertical,
+            )
+            self._define_diagonal_moves(
+                selected_piece, 
+                selected_piece_row, 
+                selected_piece_col, 
+                selected_square_row,
+                selected_square_col, 
+                board, 
+                color_slice
+            )
         elif selected_piece[piece_sliece] == 'King': 
             pass
 
