@@ -103,7 +103,6 @@ class Movements:
         self.rules.define_valid_moves(
             self.selected_piece,
             self.selected_piece_pos,
-            self.selected_square_owner,
             self.selected_square,
             board,
             self._color_slice,
