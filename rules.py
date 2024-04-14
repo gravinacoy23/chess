@@ -92,7 +92,7 @@ class Rules:
         color_slice: slice,
         is_horizontal: bool,
         is_vertical: bool,
-    ):
+    ) -> None:
         """The purpose of this function is to define all the valid horizontal moves, not valid for the king, only for rook and queen.
 
         Args:
@@ -138,10 +138,52 @@ class Rules:
                     self.valid_moves.append(current_square)
                 elif piece_at_square == selected_piece[color_slice]:
                     return
-                elif piece_at_square != selected_piece[color_slice]:
+                elif piece_at_square[color_slice] != selected_piece[color_slice]:
                     self.valid_moves.append(current_square)
                     return
             else:
+                return
+
+    def _define_diagonal_moves(
+            self,
+            selected_piece: str,
+            selected_piece_row: int,
+            selected_piece_col: int,
+            selected_square_row: int,
+            selected_square_col: int,
+            board: list,
+            color_slice: slice,
+
+    ) -> None:
+        current_row, current_col = selected_piece_row, selected_piece_col
+
+        if selected_square_row > selected_piece_row and selected_square_col > selected_piece_col: 
+            direction_row, direction_col = 1, 1
+        elif selected_square_row > selected_piece_row and selected_square_col < selected_piece_col: 
+            direction_row, direction_col = 1, -1
+        elif selected_square_row < selected_piece_row and selected_square_col < selected_piece_col: 
+            direction_row, direction_col = -1, -1
+        elif selected_square_row < selected_piece_row and selected_square_col > selected_piece_col: 
+            direction_row, direction_col = -1, 1
+        else: 
+            return
+        
+
+        while current_row != selected_square_row + direction_row and current_col != selected_square_col + direction_col: 
+            current_row += direction_row
+            current_col += direction_col
+            
+            if 0 <= current_row < 8 and 0 <= current_col < 8:
+                piece_at_square = board[current_row][current_col]
+                if board[current_row][current_col] == None:
+                    self.valid_moves.append((current_row, current_col))
+                elif board[current_row][current_col] == selected_piece[color_slice]: 
+                    return
+                elif piece_at_square[color_slice] != selected_piece[color_slice]: 
+                    self.valid_moves.append((current_row, current_col))
+                    print(self.valid_moves)
+                    return
+            else: 
                 return
 
     def define_valid_moves(
@@ -202,6 +244,22 @@ class Rules:
                 is_horizontal,
                 is_vertical,
             )
+        elif selected_piece[piece_sliece] == 'Knight': 
+            pass
+        elif selected_piece[piece_sliece] == 'Bishop': 
+            self._define_diagonal_moves(
+                selected_piece, 
+                selected_piece_row, 
+                selected_piece_col, 
+                selected_square_row,
+                selected_square_col, 
+                board, 
+                color_slice
+            )
+        elif selected_piece[piece_sliece] == 'Queen': 
+            pass
+        elif selected_piece[piece_sliece] == 'King': 
+            pass
 
     def valid_move(self, selected_square: tuple) -> bool:
         """this functions checks if the selected square to move is contained within the list of valid moves, calles to excetue the move_piece function on the movements.py
