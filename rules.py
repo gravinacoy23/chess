@@ -136,8 +136,8 @@ class Rules:
 
                 if piece_at_square == None:
                     self.valid_moves.append(current_square)
-                elif piece_at_square == selected_piece[color_slice]:
-                    return
+                elif piece_at_square[color_slice] == selected_piece[color_slice]:
+                    break
                 elif piece_at_square[color_slice] != selected_piece[color_slice]:
                     self.valid_moves.append(current_square)
                     return
@@ -177,7 +177,7 @@ class Rules:
                 piece_at_square = board[current_row][current_col]
                 if board[current_row][current_col] == None:
                     self.valid_moves.append((current_row, current_col))
-                elif board[current_row][current_col] == selected_piece[color_slice]: 
+                elif board[current_row][current_col][color_slice] == selected_piece[color_slice]: 
                     return
                 elif piece_at_square[color_slice] != selected_piece[color_slice]: 
                     self.valid_moves.append((current_row, current_col))
@@ -208,7 +208,6 @@ class Rules:
                         self.valid_moves.append((current_row, current_col))
                 else: 
                     continue
-        print(self.valid_moves)
 
     def define_valid_moves(
         self,
