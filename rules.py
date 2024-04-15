@@ -145,68 +145,87 @@ class Rules:
                 return
 
     def _define_diagonal_moves(
-            self,
-            selected_piece: str,
-            selected_piece_row: int,
-            selected_piece_col: int,
-            selected_square_row: int,
-            selected_square_col: int,
-            board: list,
-            color_slice: slice,
-
+        self,
+        selected_piece: str,
+        selected_piece_row: int,
+        selected_piece_col: int,
+        selected_square_row: int,
+        selected_square_col: int,
+        board: list,
+        color_slice: slice,
     ) -> None:
         current_row, current_col = selected_piece_row, selected_piece_col
 
-        if selected_square_row > selected_piece_row and selected_square_col > selected_piece_col: 
+        if (
+            selected_square_row > selected_piece_row
+            and selected_square_col > selected_piece_col
+        ):
             direction_row, direction_col = 1, 1
-        elif selected_square_row > selected_piece_row and selected_square_col < selected_piece_col: 
+        elif (
+            selected_square_row > selected_piece_row
+            and selected_square_col < selected_piece_col
+        ):
             direction_row, direction_col = 1, -1
-        elif selected_square_row < selected_piece_row and selected_square_col < selected_piece_col: 
+        elif (
+            selected_square_row < selected_piece_row
+            and selected_square_col < selected_piece_col
+        ):
             direction_row, direction_col = -1, -1
-        elif selected_square_row < selected_piece_row and selected_square_col > selected_piece_col: 
+        elif (
+            selected_square_row < selected_piece_row
+            and selected_square_col > selected_piece_col
+        ):
             direction_row, direction_col = -1, 1
-        else: 
+        else:
             return
-        
 
-        while current_row != selected_square_row + direction_row and current_col != selected_square_col + direction_col: 
+        while (
+            current_row != selected_square_row + direction_row
+            and current_col != selected_square_col + direction_col
+        ):
             current_row += direction_row
             current_col += direction_col
-            
+
             if 0 <= current_row < 8 and 0 <= current_col < 8:
                 piece_at_square = board[current_row][current_col]
                 if board[current_row][current_col] == None:
                     self.valid_moves.append((current_row, current_col))
-                elif board[current_row][current_col][color_slice] == selected_piece[color_slice]: 
+                elif (
+                    board[current_row][current_col][color_slice]
+                    == selected_piece[color_slice]
+                ):
                     return
-                elif piece_at_square[color_slice] != selected_piece[color_slice]: 
+                elif piece_at_square[color_slice] != selected_piece[color_slice]:
                     self.valid_moves.append((current_row, current_col))
                     return
-            else: 
+            else:
                 return
 
     def _define_knight_moves(
-            self,
-            selected_piece: str,
-            selected_piece_row: int,
-            selected_piece_col: int,
-            board: list,
-            color_slice: slice,
+        self,
+        selected_piece: str,
+        selected_piece_row: int,
+        selected_piece_col: int,
+        board: list,
+        color_slice: slice,
     ) -> None:
-        for row in [-2,-1,1,2]:
-            for col in [-2,-1,1,2]:
+        for row in [-2, -1, 1, 2]:
+            for col in [-2, -1, 1, 2]:
                 current_row = selected_piece_row + row
-                current_col = selected_piece_col + col 
+                current_col = selected_piece_col + col
                 if 0 <= current_row < 8 and 0 <= current_col < 8:
-                    if abs(row) == abs(col): 
+                    if abs(row) == abs(col):
                         continue
                     elif board[current_row][current_col] == None:
                         self.valid_moves.append((current_row, current_col))
-                    elif board[current_row][current_col][color_slice] == selected_piece[color_slice]:
+                    elif (
+                        board[current_row][current_col][color_slice]
+                        == selected_piece[color_slice]
+                    ):
                         continue
-                    else: 
+                    else:
                         self.valid_moves.append((current_row, current_col))
-                else: 
+                else:
                     continue
 
     def define_valid_moves(
@@ -239,9 +258,9 @@ class Rules:
         is_vertical = False
 
         if selected_piece_row == selected_square_row:
-                is_horizontal = True
+            is_horizontal = True
         elif selected_piece_col == selected_square_col:
-                is_vertical = True
+            is_vertical = True
 
         if selected_piece[piece_sliece] == "Pawn":
             self._define_pawn_moves(
@@ -266,25 +285,25 @@ class Rules:
                 is_horizontal,
                 is_vertical,
             )
-        elif selected_piece[piece_sliece] == 'Knight': 
+        elif selected_piece[piece_sliece] == "Knight":
             self._define_knight_moves(
                 selected_piece,
-                selected_piece_row, 
-                selected_piece_col, 
-                board, 
+                selected_piece_row,
+                selected_piece_col,
+                board,
                 color_slice,
             )
-        elif selected_piece[piece_sliece] == 'Bishop': 
+        elif selected_piece[piece_sliece] == "Bishop":
             self._define_diagonal_moves(
-                selected_piece, 
-                selected_piece_row, 
-                selected_piece_col, 
+                selected_piece,
+                selected_piece_row,
+                selected_piece_col,
                 selected_square_row,
-                selected_square_col, 
-                board, 
-                color_slice
+                selected_square_col,
+                board,
+                color_slice,
             )
-        elif selected_piece[piece_sliece] == 'Queen': 
+        elif selected_piece[piece_sliece] == "Queen":
             self._define_horizontal_vertical_moves(
                 selected_piece,
                 selected_piece_row,
@@ -297,15 +316,15 @@ class Rules:
                 is_vertical,
             )
             self._define_diagonal_moves(
-                selected_piece, 
-                selected_piece_row, 
-                selected_piece_col, 
+                selected_piece,
+                selected_piece_row,
+                selected_piece_col,
                 selected_square_row,
-                selected_square_col, 
-                board, 
-                color_slice
+                selected_square_col,
+                board,
+                color_slice,
             )
-        elif selected_piece[piece_sliece] == 'King': 
+        elif selected_piece[piece_sliece] == "King":
             pass
 
     def valid_move(self, selected_square: tuple) -> bool:
