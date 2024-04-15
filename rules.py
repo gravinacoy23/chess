@@ -93,7 +93,7 @@ class Rules:
         is_horizontal: bool,
         is_vertical: bool,
     ) -> None:
-        """The purpose of this function is to define all the valid horizontal moves, not valid for the king, only for rook and queen.
+        """The purpose of this function is to define all the valid horizontal and vertical moves, not valid for the king, only for rook and queen.
 
         Args:
             selected_piece (str): String with the name of the selected piece, ej: White Pawn
@@ -154,6 +154,17 @@ class Rules:
         board: list,
         color_slice: slice,
     ) -> None:
+        """The purpose of this function is to define the diagonal moves, valid for both bishop and queen.
+
+        Args:
+            selected_piece (str): Contains the name of the piece, ej. "White Bishop"
+            selected_piece_row (int): Contains the row of the selected piece
+            selected_piece_col (int): Contains the col of the selected piece
+            selected_square_row (int): Contains the row of the selected square to move.
+            selected_square_col (int): Contains the col of the selected square to move.
+            board (list): Array of arrays with the state of the board.
+            color_slice (slice): Slice object to access the color of the piece.
+        """
         current_row, current_col = selected_piece_row, selected_piece_col
 
         if (
@@ -209,6 +220,15 @@ class Rules:
         board: list,
         color_slice: slice,
     ) -> None:
+        """The purpose of this function is to define the valid moves for the knight.
+
+        Args:
+            selected_piece (str): Name of the piece ej. "White Knight"
+            selected_piece_row (int): row of the selected piece.
+            selected_piece_col (int): col of the selected piece.
+            board (list): Array of arrays with the current state of the board.
+            color_slice (slice): Slice object valid to access the color of the string piece.
+        """
         for row in [-2, -1, 1, 2]:
             for col in [-2, -1, 1, 2]:
                 current_row = selected_piece_row + row
