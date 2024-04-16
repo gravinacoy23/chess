@@ -77,7 +77,8 @@ class Chess:
     def _bot_mode(self) -> None:
         """Initialize the Bot screen, calling the method to draw the pieces and the board, no functionality to move pieces yet."""
         self.bot_screen.draw_play_screen()
-        self.chess_board.initalize_board(self.bot_screen.screen)
+        self.chess_board.initialize_board(self.bot_screen.screen)
+        self.movements = Movements()
         while True:
             self.bot_screen.draw_clock(self.movements.turn, self.clock)
             mouse_pos = pygame.mouse.get_pos()
