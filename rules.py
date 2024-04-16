@@ -248,6 +248,10 @@ class Rules:
                 else:
                     continue
 
+    def _define_king_moves(self):
+        """The purpose of this function is to define the valid moves"""
+        pass
+
     def define_valid_moves(
         self,
         selected_piece: str,
