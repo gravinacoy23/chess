@@ -69,7 +69,6 @@ class Rules:
                             (selected_piece_row + direction, capture_col)
                         )
                         self.en_passant = False
-                        possible_passant = False
                 elif (
                     0 <= capture_col < 8
                     and board[selected_piece_row + direction][capture_col] is None
@@ -80,6 +79,8 @@ class Rules:
                         (selected_piece_row + direction, possible_passant_col)
                     )
                     self.en_passant = True
+                else:
+                    possible_passant = False
 
     def _define_horizontal_vertical_moves(
         self,
@@ -276,6 +277,7 @@ class Rules:
             possible_passant (bool): Bool that indicates if the en passant is posible in the next turn depending on the previous move
             possible_passant_col (int): The column in which the possible enpassant is located.
         """
+        self.valid_moves.clear()
         selected_piece_row, selected_piece_col = selected_piece_pos
         selected_square_row, selected_square_col = selected_square
         is_horizontal = False

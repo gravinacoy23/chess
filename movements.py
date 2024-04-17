@@ -17,6 +17,7 @@ class Movements:
         self.possible_passant = False
         self.possible_passant_col = None
         self.passant_to_capture = None
+        self.rules = Rules()
 
     def select_piece(self, board: list, mouse_pos: tuple) -> None:
         """Logic to select a piece depending on the state of the board (matrix) and the position on the mouse
@@ -99,7 +100,6 @@ class Movements:
         Args:
             board (List): Array of arrays.
         """
-        self.rules = Rules()
         self.rules.define_valid_moves(
             self.selected_piece,
             self.selected_piece_pos,
@@ -138,8 +138,6 @@ class Movements:
                             ):
                                 self.possible_passant = True
                                 self.possible_passant_col = col_init
-                            else:
-                                self.possible_passant = False
                         else:
                             self.possible_passant = False
                         selected_piece_passant = self.selected_piece
@@ -171,7 +169,9 @@ class Movements:
                             self.turn = "Black"
                         else:
                             self.turn = "White"
+                        return
                     if self.rules.en_passant:
+
                         self.piece_is_captured == True
                         self.selected_piece = selected_piece_passant
                         if self.selected_piece[self._color_slice] == "White":
@@ -185,6 +185,7 @@ class Movements:
                             piece_is_captured=True,
                         )
                         self.selected_piece = None
+                        self.rules.en_passant = False
 
                 else:
                     self.selected_piece = None
