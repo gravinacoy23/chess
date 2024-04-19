@@ -143,8 +143,6 @@ class Movements:
                                 self.possible_passant_col = col_init
                         else:
                             self.possible_passant = False
-                        print(self.enpassant_counter)
-                        print(self.counter)
                         if self.counter != self.enpassant_counter:
                             self.possible_passant = False
                         selected_piece_passant = self.selected_piece
