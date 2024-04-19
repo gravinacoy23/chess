@@ -90,6 +90,7 @@ class Rules:
         selected_square_col: int,
         board: list,
         color_slice: slice,
+        piece_slice: slice,
         is_horizontal: bool,
         is_vertical: bool,
     ) -> None:
@@ -103,6 +104,7 @@ class Rules:
             selected_square_col (int): number of the col to move
             board (list): array of arrays of the current board state.
             color_slice (slice): slice object to access the color of the piece.
+            piece_slice (slice0):
             is_horizontal (bool): True if current move is a horizontal move.
             is_vertical (bool): True if current move is a vertical move
         """
@@ -136,6 +138,8 @@ class Rules:
 
                 if piece_at_square == None:
                     self.valid_moves.append(current_square)
+                    if selected_piece[piece_slice] == "King":
+                        return
                 elif piece_at_square[color_slice] == selected_piece[color_slice]:
                     break
                 elif piece_at_square[color_slice] != selected_piece[color_slice]:
@@ -153,6 +157,7 @@ class Rules:
         selected_square_col: int,
         board: list,
         color_slice: slice,
+        piece_slice: slice,
     ) -> None:
         """The purpose of this function is to define the diagonal moves, valid for both bishop and queen.
 
@@ -164,6 +169,7 @@ class Rules:
             selected_square_col (int): Contains the col of the selected square to move.
             board (list): Array of arrays with the state of the board.
             color_slice (slice): Slice object to access the color of the piece.
+            piece_slice (slice):
         """
         current_row, current_col = selected_piece_row, selected_piece_col
 
@@ -201,6 +207,8 @@ class Rules:
                 piece_at_square = board[current_row][current_col]
                 if board[current_row][current_col] == None:
                     self.valid_moves.append((current_row, current_col))
+                    if selected_piece[piece_slice] == "King":
+                        return
                 elif (
                     board[current_row][current_col][color_slice]
                     == selected_piece[color_slice]
@@ -248,10 +256,6 @@ class Rules:
                 else:
                     continue
 
-    def _define_king_moves(self):
-        """The purpose of this function is to define the valid moves"""
-        pass
-
     def define_valid_moves(
         self,
         selected_piece: str,
@@ -259,7 +263,7 @@ class Rules:
         selected_square: tuple,
         board: list,
         color_slice: slice,
-        piece_sliece: slice,
+        piece_slice: slice,
         possible_passant: bool,
         possible_passant_col: int,
     ):
@@ -287,7 +291,7 @@ class Rules:
         elif selected_piece_col == selected_square_col:
             is_vertical = True
 
-        if selected_piece[piece_sliece] == "Pawn":
+        if selected_piece[piece_slice] == "Pawn":
             self._define_pawn_moves(
                 selected_piece,
                 selected_piece_row,
@@ -298,7 +302,7 @@ class Rules:
                 possible_passant,
                 possible_passant_col,
             )
-        elif selected_piece[piece_sliece] == "Rook":
+        elif selected_piece[piece_slice] == "Rook":
             self._define_horizontal_vertical_moves(
                 selected_piece,
                 selected_piece_row,
@@ -307,10 +311,11 @@ class Rules:
                 selected_square_col,
                 board,
                 color_slice,
+                piece_slice,
                 is_horizontal,
                 is_vertical,
             )
-        elif selected_piece[piece_sliece] == "Knight":
+        elif selected_piece[piece_slice] == "Knight":
             self._define_knight_moves(
                 selected_piece,
                 selected_piece_row,
@@ -318,7 +323,7 @@ class Rules:
                 board,
                 color_slice,
             )
-        elif selected_piece[piece_sliece] == "Bishop":
+        elif selected_piece[piece_slice] == "Bishop":
             self._define_diagonal_moves(
                 selected_piece,
                 selected_piece_row,
@@ -327,8 +332,12 @@ class Rules:
                 selected_square_col,
                 board,
                 color_slice,
+                piece_slice,
             )
-        elif selected_piece[piece_sliece] == "Queen":
+        elif (
+            selected_piece[piece_slice] == "Queen"
+            or selected_piece[piece_slice] == "King"
+        ):
             self._define_horizontal_vertical_moves(
                 selected_piece,
                 selected_piece_row,
@@ -337,6 +346,7 @@ class Rules:
                 selected_square_col,
                 board,
                 color_slice,
+                piece_slice,
                 is_horizontal,
                 is_vertical,
             )
@@ -348,9 +358,8 @@ class Rules:
                 selected_square_col,
                 board,
                 color_slice,
+                piece_slice,
             )
-        elif selected_piece[piece_sliece] == "King":
-            pass
 
     def valid_move(self, selected_square: tuple) -> bool:
         """this functions checks if the selected square to move is contained within the list of valid moves, calles to excetue the move_piece function on the movements.py
