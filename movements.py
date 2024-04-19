@@ -17,6 +17,7 @@ class Movements:
         self.possible_passant = False
         self.possible_passant_col = None
         self.passant_to_capture = None
+        self.counter = 0
         self.rules = Rules()
 
     def select_piece(self, board: list, mouse_pos: tuple) -> None:
@@ -118,6 +119,7 @@ class Movements:
                 self.turn == "Black"
                 and self.selected_piece[self._color_slice] == "Black"
             ):
+                self.counter += 1
                 if self.selected_piece_pos != self.selected_square:
                     if self.selected_square_owner == None:
                         row_init, col_init = self.selected_piece_pos
@@ -137,8 +139,13 @@ class Movements:
                                 or row_to_move - 2 == row_init
                             ):
                                 self.possible_passant = True
+                                self.enpassant_counter = self.counter
                                 self.possible_passant_col = col_init
                         else:
+                            self.possible_passant = False
+                        print(self.enpassant_counter)
+                        print(self.counter)
+                        if self.counter != self.enpassant_counter:
                             self.possible_passant = False
                         selected_piece_passant = self.selected_piece
                         self.selected_piece = None

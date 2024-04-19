@@ -68,7 +68,6 @@ class Rules:
                         self.valid_moves.append(
                             (selected_piece_row + direction, capture_col)
                         )
-                        self.en_passant = False
                 elif (
                     0 <= capture_col < 8
                     and board[selected_piece_row + direction][capture_col] is None
