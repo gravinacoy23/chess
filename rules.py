@@ -104,7 +104,7 @@ class Rules:
             selected_square_col (int): number of the col to move
             board (list): array of arrays of the current board state.
             color_slice (slice): slice object to access the color of the piece.
-            piece_slice (slice0):
+            piece_slice (slice): Slice object referencing the owner of the piece
             is_horizontal (bool): True if current move is a horizontal move.
             is_vertical (bool): True if current move is a vertical move
         """
@@ -169,7 +169,7 @@ class Rules:
             selected_square_col (int): Contains the col of the selected square to move.
             board (list): Array of arrays with the state of the board.
             color_slice (slice): Slice object to access the color of the piece.
-            piece_slice (slice):
+            piece_slice (slice): Slice object referencing the owner of the piece
         """
         current_row, current_col = selected_piece_row, selected_piece_col
 
