@@ -267,6 +267,18 @@ class Rules:
         color_slice: slice,
         piece_slice: slice,
     ):
+        """The purpose of this function is to casttle.
+
+        Args:
+            selected_piece (str): String with the selected piece
+            selected_piece_row (int): integer with the selected piece row
+            selected_piece_col (int): integer with the selected piece col
+            selected_square_row (int): selected square row int
+            selected_square_col (int): selected square col int
+            board (list): array of arrays with the current state of the board.
+            color_slice (slice): Slice object to access the color of the piece.
+            piece_slice (slice): Slice object to access the name of the piece
+        """
         if selected_piece_row == selected_square_row:
             if (
                 selected_piece_col + 2 == selected_square_col
