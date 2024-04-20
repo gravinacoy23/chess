@@ -256,6 +256,39 @@ class Rules:
                 else:
                     continue
 
+    def _castle(
+        self,
+        selected_piece: str,
+        selected_piece_row: int,
+        selected_piece_col: int,
+        selected_square_row: int,
+        selected_square_col: int,
+        board: list,
+        color_slice: slice,
+        piece_slice: slice,
+    ):
+        if selected_piece_row == selected_square_row:
+            if (
+                selected_piece_col + 2 == selected_square_col
+                and board[selected_piece_row][selected_piece_col + 3][piece_slice]
+                == "Rook"
+            ):
+                self.valid_moves.append((selected_square_row, selected_square_col))
+                board[selected_piece_row][selected_piece_col + 3] = None
+                board[selected_piece_row][
+                    selected_square_col - 1
+                ] = f"{selected_piece[color_slice]} Rook"
+            elif (
+                selected_piece_col - 2 == selected_square_col
+                and board[selected_piece_row][selected_piece_col + 3][piece_slice]
+                == "Rook"
+            ):
+                self.valid_moves.append((selected_square_row, selected_square_col))
+                board[selected_piece_row][selected_piece_col - 4] = None
+                board[selected_piece_row][
+                    selected_square_col + 1
+                ] = f"{selected_piece[color_slice]} Rook"
+
     def define_valid_moves(
         self,
         selected_piece: str,
@@ -351,6 +384,17 @@ class Rules:
                 is_vertical,
             )
             self._define_diagonal_moves(
+                selected_piece,
+                selected_piece_row,
+                selected_piece_col,
+                selected_square_row,
+                selected_square_col,
+                board,
+                color_slice,
+                piece_slice,
+            )
+        if selected_piece[piece_slice] == "King":
+            self._castle(
                 selected_piece,
                 selected_piece_row,
                 selected_piece_col,
