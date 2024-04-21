@@ -24,7 +24,7 @@ class Button:
             self.rect = self.image.get_rect(center=(self.x_pos, self.y_pos))
         self.text_rect = self.text.get_rect(center=(self.x_pos, self.y_pos))
 
-    def update(self, screen):
+    def update(self, screen) -> None:
         """This mehtod is to blit the button on the screen. It is necessary because if we call the blit method on the button after creating it won't work.
 
         Args:
@@ -48,7 +48,7 @@ class Button:
             self.text_rect.left, self.text_rect.right
         ) and position[1] in range(self.text_rect.top, self.text_rect.bottom)
 
-    def change_color(self, position, screen):
+    def change_color(self, position, screen) -> None:
         """This is the function that takes care of changing the color of the button, and changes it back to the default color.
 
         Args:

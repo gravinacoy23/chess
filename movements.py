@@ -92,7 +92,7 @@ class Movements:
 
         return row, col
 
-    def move_piece(self, board: list, selecting_piece: bool) -> None:
+    def move_piece(self, board: list) -> None:
         """This contains the logic to move a piece somewhat raw, very few rules.
         rules included: The turn of the player, you can only play on your turn. You can not move the piece to the same square that the piece is (for some reason this was deleting the pieces)
         If you are going to move the piece to a square with another piece it cannot be from the same color. this function does allow captures but does not have any rule on how to prevent an
@@ -110,7 +110,7 @@ class Movements:
             self._piece_slice,
             self.possible_passant,
             self.possible_passant_col,
-            self.turn
+            self.turn,
         )
         if self.rules.valid_move(self.selected_square):
             if (
