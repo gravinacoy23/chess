@@ -110,6 +110,7 @@ class Movements:
             self._piece_slice,
             self.possible_passant,
             self.possible_passant_col,
+            self.turn
         )
         if self.rules.valid_move(self.selected_square):
             if (

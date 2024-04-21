@@ -266,6 +266,7 @@ class Rules:
         board: list,
         color_slice: slice,
         piece_slice: slice,
+        turn: str,
     ):
         """The purpose of this function is to casttle.
 
@@ -279,7 +280,7 @@ class Rules:
             color_slice (slice): Slice object to access the color of the piece.
             piece_slice (slice): Slice object to access the name of the piece
         """
-        if selected_piece_row == selected_square_row:
+        if selected_piece_row == selected_square_row and selected_piece[color_slice] == turn:
             if (
                 selected_piece_col + 2 == selected_square_col
                 and board[selected_piece_row][selected_piece_col + 3][piece_slice]
@@ -311,6 +312,7 @@ class Rules:
         piece_slice: slice,
         possible_passant: bool,
         possible_passant_col: int,
+        turn: str
     ):
         """This is the function that will call the functions that contain the logic to move each piece.
 
@@ -415,6 +417,7 @@ class Rules:
                 board,
                 color_slice,
                 piece_slice,
+                turn,
             )
 
     def valid_move(self, selected_square: tuple) -> bool:
