@@ -279,6 +279,7 @@ class Rules:
             board (list): array of arrays with the current state of the board.
             color_slice (slice): Slice object to access the color of the piece.
             piece_slice (slice): Slice object to access the name of the piece
+            turn (str): String witht the current turn Black or Whtie
         """
         if selected_piece_row == selected_square_row and selected_piece[color_slice] == turn:
             if (
@@ -326,6 +327,7 @@ class Rules:
             piece_slice (slice): Contains a slice object that references the Piece of the piece string in format "White Pawn"
             possible_passant (bool): Bool that indicates if the en passant is posible in the next turn depending on the previous move
             possible_passant_col (int): The column in which the possible enpassant is located.
+            turn (str): String witht the current turn Black or Whtie
         """
         self.valid_moves.clear()
         selected_piece_row, selected_piece_col = selected_piece_pos
