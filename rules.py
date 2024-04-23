@@ -308,6 +308,7 @@ class Rules:
                 == "Rook"
             ):
                 for i in range(1, squares_move + 1):
+                    # The objective here is to iterate over the squares between the King and the Rook to see if they are empty, utilizing the values defined above.
                     if (
                         board[selected_piece_row][
                             selected_piece_col + i * iter_direction
