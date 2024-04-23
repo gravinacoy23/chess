@@ -3,6 +3,7 @@ class Rules:
         """intializes the list to pass as an argument on a function."""
         self.valid_moves = list()
         self.en_passant = False
+        self.castle = None
 
     def _define_pawn_moves(
         self,
@@ -266,7 +267,6 @@ class Rules:
         board: list,
         color_slice: slice,
         piece_slice: slice,
-        turn: str,
     ):
         """The purpose of this function is to casttle.
 
@@ -287,12 +287,14 @@ class Rules:
             rook_direction = -1
             king_direction = 2
             iter_direction = 1
+            self.castle = 'Short'
         else:
             squares_move = 3
             rook_pos = -4
             rook_direction = 1
             king_direction = -2
-            iter_direction = 1
+            iter_direction = -1
+            self.castle = 'Long'
 
         if selected_piece[color_slice] == "White":
             starting_row = 7
@@ -307,7 +309,7 @@ class Rules:
                 ]
                 == "Rook"
             ):
-                for i in range(1, squares_move + 1):
+                for i in range(1, squares_move + iter_direction):
                     # The objective here is to iterate over the squares between the King and the Rook to see if they are empty, utilizing the values defined above.
                     if (
                         board[selected_piece_row][
@@ -332,7 +334,7 @@ class Rules:
         piece_slice: slice,
         possible_passant: bool,
         possible_passant_col: int,
-        turn: str,
+        turn: str
     ):
         """This is the function that will call the functions that contain the logic to move each piece.
 
@@ -353,6 +355,9 @@ class Rules:
         selected_square_row, selected_square_col = selected_square
         is_horizontal = False
         is_vertical = False
+
+        if selected_piece[color_slice]!= turn:
+            return
 
         if selected_piece_row == selected_square_row:
             is_horizontal = True
@@ -438,7 +443,6 @@ class Rules:
                 board,
                 color_slice,
                 piece_slice,
-                turn,
             )
 
     def valid_move(self, selected_square: tuple) -> bool:
