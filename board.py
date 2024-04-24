@@ -15,8 +15,8 @@ class Chess_board:
         self.knight_image_white = pygame.image.load(
             "media/elements/pieces/white/knight.png"
         )
-        self.bishop_image_white = pygame.image.load(
-            "media/elements/pieces/white/bishop.png"
+        self.bishop_image_white = pygame.transform.scale(
+            pygame.image.load("media/elements/pieces/white/bishop.png"), (85, 85)
         )
         self.queen_image_white = pygame.image.load(
             "media/elements/pieces/white/queen.png"
@@ -33,8 +33,8 @@ class Chess_board:
         self.knight_image_black = pygame.image.load(
             "media/elements/pieces/black/knight.png"
         )
-        self.bishop_image_black = pygame.image.load(
-            "media/elements/pieces/black/bishop.png"
+        self.bishop_image_black = pygame.transform.scale(
+            pygame.image.load("media/elements/pieces/black/bishop.png"), (83, 83)
         )
         self.queen_image_black = pygame.image.load(
             "media/elements/pieces/black/queen.png"
