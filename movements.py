@@ -25,7 +25,8 @@ class Movements:
         """Logic to select a piece depending on the state of the board (matrix) and the position on the mouse
 
         Args:
-            board (Chess_board): Type defined on the board.py and has a list of lists with the current state of the board
+            board (Chess_board): Type defined on the board.py and has a list of lists with the current state of the
+            board
             mouse_pos (Tuple): defined on the main.py
         """
         clicked_row, clicked_col = self._convert_mouse_pos_to_board(mouse_pos)
@@ -46,7 +47,8 @@ class Movements:
 
     @staticmethod
     def _convert_mouse_pos_to_board(position: tuple) -> tuple:
-        """This is a match case statement to match the position of the mouse to a row col so that we can work with it on the functions of this class.
+        """This is a match case statement to match the position of the mouse to a row col so that we can work with it on
+        the functions of this class.
 
         Args:
             position (Tuple): Position of the mouse, defined on main.py
@@ -96,9 +98,10 @@ class Movements:
 
     def move_piece(self, board: list) -> None:
         """This contains the logic to move a piece somewhat raw, very few rules.
-        rules included: The turn of the player, you can only play on your turn. You can not move the piece to the same square that the piece is (for some reason this was deleting the pieces)
-        If you are going to move the piece to a square with another piece it cannot be from the same color. this function does allow captures but does not have any rule on how to prevent an
-        illegal capture.
+        rules included: The turn of the player, you can only play on your turn. You can not move the piece to the same
+        square that the piece is (for some reason this was deleting the pieces)
+        If you are going to move the piece to a square with another piece it cannot be from the same color. this
+        function does allow captures but does not have any rule on how to prevent an illegal capture.
 
         Args:
             board (List): Array of arrays.
@@ -206,8 +209,8 @@ class Movements:
         selected_piece: str,
         piece_is_captured: bool,
     ) -> None:
-        """In order to display on the screen the move on a chess notation created this function to convert the moves from
-        the board coordinates to a chess notation, appending them
+        """In order to display on the screen the move on a chess notation created this function to convert the moves
+        from the board coordinates to a chess notation, appending them
         to the move log list for both black and white.
 
         Args:

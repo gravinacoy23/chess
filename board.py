@@ -52,7 +52,8 @@ class ChessBoard:
         position, taking care of both assigning the initial position a bliting the image to the screen.
 
         Args:
-            screen (Play_screen or Bot_screen): this argument is intended to be received on the main file and these are subclases from the file screeens.
+            screen (Play_screen or Bot_screen): this argument is intended to be received on the main file and these are
+            subclasses from the file screens.
         """
         ChessBoard.captured_pieces.clear()
         for col in range(0, 8):
@@ -115,10 +116,12 @@ class ChessBoard:
 
     def update_board(self, screen):
         """_summary_
-        The purpose of this function is to update the board depending on the current state of matrix (array of arrays) self.board.
+        The purpose of this function is to update the board depending on the current state of matrix (array of arrays)
+        self.board.
 
         Args:
-            screen (Play_screen or Bot_screen): this argument is intended to be received on the main file and these are subclases from the file screeens.
+            screen (Play_screen or Bot_screen): this argument is intended to be received on the main file and these are
+            subclasses from the file screens.
         """
         screen.blit(self.board_image, (197.5, 50))
 

@@ -108,7 +108,7 @@ class Chess:
             self.clock.tick(60)
 
     def _local_mode(self) -> None:
-        """Has the ability to initilize board state and move the pieces, no rules to move pieces yet"""
+        """Has the ability to initialize board state and move the pieces, no rules to move pieces yet"""
         self.play_screen.draw_play_screen()
         self.chess_board.initialize_board(self.play_screen.screen)
         self.movements = Movements()
@@ -162,7 +162,7 @@ class Chess:
 
     def run_game(self) -> None:
         """Function that runs the game calling the main menu
-        method and intializing objects to use throughout the program."""
+        method and initializing objects to use throughout the program."""
         self._main_menu()
 
 

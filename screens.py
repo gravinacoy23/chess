@@ -49,8 +49,9 @@ class MainMenuScreen(Screen):
 class PlayScreen(Screen):
 
     def __init__(self) -> None:
-        """Notice that this screen, since it's a child class from Screen, reassigns the value of self.chess_board_blur_surface to the image of the board without the blur.
-        We also get the rect which will help us in our method.
+        """Notice that this screen, since it's a child class from Screen, reassigns the value of
+        self.chess_board_blur_surface to the image of the board without the blur. We also get the rect which will
+        help us in our method.
         """
         super().__init__()
         self.white_time = 90 * 60
