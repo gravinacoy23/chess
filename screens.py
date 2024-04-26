@@ -1,6 +1,5 @@
 import pygame
 from button import Button
-from board import Chess_board
 
 
 class Screen:
@@ -19,7 +18,7 @@ class Screen:
         self.screen.blit(self.background_color, (0, 0))
 
 
-class Main_menu_screen(Screen):
+class MainMenuScreen(Screen):
     def __init__(self) -> None:
         super().__init__()
 
@@ -38,7 +37,8 @@ class Main_menu_screen(Screen):
         )
 
     def draw_main_menu(self):
-        """The purpose of the function is to draw all the elements of the main menu, including the buttons for the other screen using the class Button"""
+        """The purpose of the function is to draw all the elements of the main menu, including the buttons for the
+        other screen using the class Button"""
         self.screen.blit(self.chess_board_blur_surface, (197.5, 50))
         self.screen.blit(self.chess_text, (260, 50))
         self.local_button.update(self.screen)
@@ -46,13 +46,15 @@ class Main_menu_screen(Screen):
         self.settings_button.update(self.screen)
 
 
-class Play_screen(Screen):
+class PlayScreen(Screen):
 
     def __init__(self) -> None:
         """Notice that this screen, since it's a child class from Screen, reassigns the value of self.chess_board_blur_surface to the image of the board without the blur.
         We also get the rect which will help us in our method.
         """
         super().__init__()
+        self.white_time = 90 * 60
+        self.black_time = 90 * 60
         self.chess_board_blur_surface = pygame.transform.scale(
             pygame.image.load("media/elements/board.png"), (700, 675)
         )
@@ -66,21 +68,23 @@ class Play_screen(Screen):
         self.background_clock_white.fill("White")
 
     def draw_play_screen(self):
-        """The purpose of this function is to blit our main elements to the screen, without the pieces, only the board itself and the text/buttons."""
+        """The purpose of this function is to blit our main elements to the screen, without the pieces,
+        only the board itself and the text/buttons."""
         self.screen.blit(self.background_color, (0, 0))
         self.screen.blit(self.chess_board_blur_surface, (197.5, 50))
-        self.white_time = 90 * 60
-        self.black_time = 90 * 60
         self.back_button.update(self.screen)
 
     def check_for_input(self, position: tuple) -> bool:
-        """The purpose of this function is to check whether or not a postion in specific is within the board, in this case, the position of the mouse.
+        """The purpose of this function is to check whether a position in specific is within the board, in this case,
+        the position of the mouse.
 
         Args:
-            position (Tuple): variable that's defined on the main file, at all times we are calculating the position of the mouse.
+            position (Tuple): variable that's defined on the main file, at all times we are calculating the position of
+            the mouse.
 
         Returns:
-            Bool: The return statement is a boolean expression that says whether or not the mouse was on the screeen on the las click event.
+            Bool: The return statement is a boolean expression that says whether the mouse was on the screen on the last
+             click event.
         """
         return position[0] in range(
             self.chess_board_rect.left, self.chess_board_rect.right
@@ -89,8 +93,9 @@ class Play_screen(Screen):
         )
 
     def draw_clock(self, turn: str, clock) -> None:
-        """The purpose of this functions is to draw the clock on the play screen and count from 120 to zero as in clasical chess. In the future we will have a setting for
-        the clock to intiialize form a different time.
+        """The purpose of this function is to draw the clock on the play screen and count from 120 to zero as in
+        classical chess. In the future we will have a setting for
+        the clock to initialize form a different time.
 
         Args:
             turn (str): Defined on  the movements.py and passes as an argument on the main.py
@@ -139,13 +144,14 @@ class Play_screen(Screen):
             self.screen.blit(move_text, (100, i * (50 + 5) + 50))
 
 
-class Bot_screen(Play_screen):
+class BotScreen(PlayScreen):
     def __init__(self) -> None:
-        """The only purpose of this subclass (so far) is to have a different screen for the Bot mode with the word Bot instead of Player 2."""
+        """The only purpose of this subclass (so far) is to have a different screen for the Bot mode with the word
+        Bot instead of Player 2."""
         super().__init__()
 
 
-class Settings_screen(Screen):
+class SettingsScreen(Screen):
     def __init__(self) -> None:
         super().__init__()
 
@@ -159,8 +165,9 @@ class Settings_screen(Screen):
         self.back_button = Button((60, 20), "Back", self.font_text, "Black", "White")
 
     def draw_settings_screen(self):
-        """Same as the previous Draw functions, this one draws the settings screen, in the future this might transform into a new subclass, or new screeen, because the
-        settings that we'll have is to select a different color for the pieces, this will be after most of the work is done.
+        """Same as the previous Draw functions, this one draws the settings screen, in the future this might
+        transform into a new subclass, or new screen, because the settings that we'll have is to select a different
+        color for the pieces, this will be after most of the work is done.
         """
         self.screen.blit(self.chess_board_blur_surface, (197.5, 50))
         self.screen.blit(self.chess_text, (260, 50))

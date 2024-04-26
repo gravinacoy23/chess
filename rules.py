@@ -1,6 +1,6 @@
 class Rules:
     def __init__(self) -> None:
-        """intializes the list to pass as an argument on a function."""
+        """initializes the list to pass as an argument on a function."""
         self.valid_moves = list()
         self.en_passant = False
         self.castle = None
@@ -16,16 +16,18 @@ class Rules:
         possible_passant: bool,
         possible_passant_col: int,
     ) -> None:
-        """This method is used to determine the valid moves for a given pawn, wether a capture or a move forward.
+        """This method is used to determine the valid moves for a given pawn, whether a capture or a move forward.
 
         Args:
-            selected_piece (str): a tring containing the name of the piece ej. White pawn
+            selected_piece (str): a string containing the name of the piece ej. White pawn
             selected_piece_row (int): number of the row in which the piece currently is.
-            selected_piece_col (int): number of the colmun in which the piece currently is.
+            selected_piece_col (int): number of the column in which the piece currently is.
             selected_square_col (int): column in which the selected square is (selected square to move)
             board (list): array of arrays.
-            color_slice (slice): Contains a slice object that references the color of the piece string in format "White Pawn"
-            possible_passant (bool): Bool that indicates if the en passant is posible in the next turn depending on the previous move
+            color_slice (slice): Contains a slice object that references the color of the piece string in format "White
+            Pawn"
+            possible_passant (bool): Bool that indicates if the en passant is possible in the next turn depending on the
+            previous move
             possible_passant_col (int): The column in which the possible enpassant is located.
         """
         if selected_piece[color_slice] == "White":
@@ -95,7 +97,8 @@ class Rules:
         is_horizontal: bool,
         is_vertical: bool,
     ) -> None:
-        """The purpose of this function is to define all the valid horizontal and vertical moves, not valid for the king, only for rook and queen.
+        """The purpose of this function is to define all the valid horizontal and vertical moves, not valid for the
+        king, only for rook and queen.
 
         Args:
             selected_piece (str): String with the name of the selected piece, ej: White Pawn
@@ -137,7 +140,7 @@ class Rules:
                 elif is_vertical:
                     piece_at_square = board[current_index][fixed_index]
 
-                if piece_at_square == None:
+                if piece_at_square is None:
                     self.valid_moves.append(current_square)
                     if selected_piece[piece_slice] == "King":
                         return
@@ -206,7 +209,7 @@ class Rules:
 
             if 0 <= current_row < 8 and 0 <= current_col < 8:
                 piece_at_square = board[current_row][current_col]
-                if board[current_row][current_col] == None:
+                if board[current_row][current_col] is None:
                     self.valid_moves.append((current_row, current_col))
                     if selected_piece[piece_slice] == "King":
                         return
@@ -245,7 +248,7 @@ class Rules:
                 if 0 <= current_row < 8 and 0 <= current_col < 8:
                     if abs(row) == abs(col):
                         continue
-                    elif board[current_row][current_col] == None:
+                    elif board[current_row][current_col] is None:
                         self.valid_moves.append((current_row, current_col))
                     elif (
                         board[current_row][current_col][color_slice]
@@ -267,7 +270,7 @@ class Rules:
         color_slice: slice,
         piece_slice: slice,
     ):
-        """The purpose of this function is to casttle.
+        """The purpose of this function is to castle.
 
         Args:
             selected_piece (str): String with the selected piece
@@ -277,7 +280,6 @@ class Rules:
             board (list): array of arrays with the current state of the board.
             color_slice (slice): Slice object to access the color of the piece.
             piece_slice (slice): Slice object to access the name of the piece
-            turn (str): String witht the current turn Black or Whtie
         """
         if selected_piece_col < selected_square_col:
             squares_move = 2
@@ -307,13 +309,14 @@ class Rules:
                 ]
                 == "Rook"
             ):
-                # The objective here is to iterate over the squares between the King and the Rook to see if they are empty, utilizing the values defined above.
+                # The objective here is to iterate over the squares between the King and the Rook to see if they are
+                # empty, utilizing the values defined above.
                 for i in range(1, squares_move + iter_direction):
                     if (
                         board[selected_piece_row][
                             selected_piece_col + i * iter_direction
                         ]
-                        != None
+                        is not None
                     ):
                         return
                 self.valid_moves.append((selected_piece_row, selected_square_col))
@@ -337,16 +340,18 @@ class Rules:
         """This is the function that will call the functions that contain the logic to move each piece.
 
         Args:
-            selected_piece (str): selected_piece (str): a tring containing the name of the piece ej. White pawn
-            selected_piece_pos (tuple): a tupple containing the position on the board from the selected piece to move.
-            selected_square_owner (Str): A string containing the name of the owner of selected square to move.
-            selected_square (tuple): a tupple containing the position on the board of the selected square to move.
+            selected_piece (str): selected_piece (str): a string containing the name of the piece ej. White pawn
+            selected_piece_pos (tuple): a tuple containing the position on the board from the selected piece to move.
+            selected_square (tuple): a tuple containing the position on the board of the selected square to move.
             board (List): array of arrays with the current state of the board.
-            color_slice (slice): Contains a slice object that references the color of the piece string in format "White Pawn"
-            piece_slice (slice): Contains a slice object that references the Piece of the piece string in format "White Pawn"
-            possible_passant (bool): Bool that indicates if the en passant is posible in the next turn depending on the previous move
+            color_slice (slice): Contains a slice object that references the color of the piece string in format "White
+            Pawn"
+            piece_slice (slice): Contains a slice object that references the Piece of the piece string in format "White
+            Pawn"
+            possible_passant (bool): Bool that indicates if the en passant is possible in the next turn depending on the
+            previous move
             possible_passant_col (int): The column in which the possible enpassant is located.
-            turn (str): String witht the current turn Black or Whtie
+            turn (str): String with the current turn Black or White.
         """
         self.valid_moves.clear()
         selected_piece_row, selected_piece_col = selected_piece_pos
@@ -443,10 +448,11 @@ class Rules:
             )
 
     def valid_move(self, selected_square: tuple) -> bool:
-        """this functions checks if the selected square to move is contained within the list of valid moves, calles to excetue the move_piece function on the movements.py
+        """this functions checks if the selected square to move is contained within the list of valid moves, calls to
+        execute the move_piece function on the movements.py
 
         Args:
-            selected_square (tupple): tupple that contains the positon on the board of the selected square.
+            selected_square (tuple): tuple that contains the position on the board of the selected square.
 
         Returns:
             a boolean value stating if it is within the list of valid moves.

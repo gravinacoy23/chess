@@ -1,7 +1,7 @@
 import pygame
 
 
-class Chess_board:
+class ChessBoard:
     captured_pieces = list()
 
     def __init__(self) -> None:
@@ -45,16 +45,16 @@ class Chess_board:
         self.board_image = pygame.transform.scale(
             pygame.image.load("media/elements/board.png"), (700, 675)
         )
+        self.board = [None] * 8
 
     def initialize_board(self, screen):
-        """The purpose of this function is to initialize the matrix of the board with the pieces on their iniital position, taking care of
-        both asigning the iniital position a bliting the image to the screen.
+        """The purpose of this function is to initialize the matrix of the board with the pieces on their initial
+        position, taking care of both assigning the initial position a bliting the image to the screen.
 
         Args:
             screen (Play_screen or Bot_screen): this argument is intended to be received on the main file and these are subclases from the file screeens.
         """
-        Chess_board.captured_pieces.clear()
-        self.board = [None] * 8
+        ChessBoard.captured_pieces.clear()
         for col in range(0, 8):
             self.board[col] = [None] * 8
         for row in range(0, 8):

@@ -25,10 +25,11 @@ class Button:
         self.text_rect = self.text.get_rect(center=(self.x_pos, self.y_pos))
 
     def update(self, screen) -> None:
-        """This mehtod is to blit the button on the screen. It is necessary because if we call the blit method on the button after creating it won't work.
+        """This method is to blit the button on the screen. It is necessary because if we call the blit method on the
+        button after creating it won't work.
 
-        Args:
-            screen (Screen): this Could be type Screen or any of it's subclases, is the screen defined for each of the screens of the game.
+        Args: screen (Screen): this Could be type Screen or any of it's subclasses, is the screen defined for each of
+        the screens of the game.
         """
         if self.image is None:
             screen.blit(self.text, self.text_rect)
@@ -36,20 +37,22 @@ class Button:
             screen.blit(self.image, self.rect)
 
     def check_for_input(self, position) -> bool:
-        """Checks if we are hovering over the button, serves both to check if we clicked it and to change it's color when hovering.
+        """Checks if we are hovering over the button, serves both to check if we clicked it and to change it's color
+        when hovering.
 
         Args:
             position (Tuple): Mouse position defined on the main file.
 
         Returns:
-            bool: Returns wether or not we are hovering over the button on a given position.
+            bool: Returns whether we are hovering over the button on a given position.
         """
         return position[0] in range(
             self.text_rect.left, self.text_rect.right
         ) and position[1] in range(self.text_rect.top, self.text_rect.bottom)
 
     def change_color(self, position, screen) -> None:
-        """This is the function that takes care of changing the color of the button, and changes it back to the default color.
+        """This is the function that takes care of changing the color of the button, and changes it back to the default
+        color.
 
         Args:
             position (Tuple): Again, mouse position defined on main.py

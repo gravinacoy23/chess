@@ -1,8 +1,8 @@
 import pygame
 from sys import exit
 
-from screens import Main_menu_screen, Play_screen, Bot_screen, Settings_screen
-from board import Chess_board
+from screens import MainMenuScreen, PlayScreen, BotScreen, SettingsScreen
+from board import ChessBoard
 from movements import Movements
 
 
@@ -11,9 +11,15 @@ class Chess:
         """initializes pygame and the clock"""
         pygame.init()
         self.clock = pygame.time.Clock()
+        self.menu = MainMenuScreen()
+        self.play_screen = PlayScreen()
+        self.bot_screen = BotScreen()
+        self.settings_screen = SettingsScreen()
+        self.chess_board = ChessBoard()
 
     def _main_menu(self) -> None:
-        """this functions is called at the begining of the game to initialize the GUI, uses the object of the screen file Main_menu_screen"""
+        """this function is called at the beginning of the game to initialize the GUI,
+        uses the object of the screen file Main_menu_screen"""
         self.menu.screen.fill("black")
         self.menu.screen.fill("darkslategray1")
         while True:
@@ -46,7 +52,7 @@ class Chess:
             self.clock.tick(60)
 
     def _settings_mode(self) -> None:
-        """initilizes setting screen, loops over buttons to apply effects."""
+        """initializes setting screen, loops over buttons to apply effects."""
         self.menu.screen.fill("black")
         self.menu.screen.fill("darkslategray1")
         self.settings_screen.draw_settings_screen()
@@ -74,7 +80,8 @@ class Chess:
             self.clock.tick(60)
 
     def _bot_mode(self) -> None:
-        """Initialize the Bot screen, calling the method to draw the pieces and the board, no functionality to move pieces yet."""
+        """Initialize the Bot screen, calling the method to draw the
+        pieces and the board, no functionality to move pieces yet."""
         self.bot_screen.draw_play_screen()
         self.chess_board.initialize_board(self.bot_screen.screen)
         self.movements = Movements()
@@ -154,12 +161,8 @@ class Chess:
             self.clock.tick(60)
 
     def run_game(self) -> None:
-        """Function that runs the game calling the main menu method and intializing objects to use throughout the program."""
-        self.menu = Main_menu_screen()
-        self.play_screen = Play_screen()
-        self.bot_screen = Bot_screen()
-        self.settings_screen = Settings_screen()
-        self.chess_board = Chess_board()
+        """Function that runs the game calling the main menu
+        method and intializing objects to use throughout the program."""
         self._main_menu()
 
 
