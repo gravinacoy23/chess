@@ -1,9 +1,9 @@
 import pygame
 from sys import exit
 
-from screens import MainMenuScreen, PlayScreen, BotScreen, SettingsScreen
-from board import ChessBoard
-from movements import Movements
+from src.screens import MainMenuScreen, PlayScreen, BotScreen, SettingsScreen
+from src.board import ChessBoard
+from src.movements import Movements
 
 
 class Chess:
