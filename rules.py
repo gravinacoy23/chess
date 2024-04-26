@@ -262,7 +262,6 @@ class Rules:
         selected_piece: str,
         selected_piece_row: int,
         selected_piece_col: int,
-        selected_square_row: int,
         selected_square_col: int,
         board: list,
         color_slice: slice,
@@ -274,7 +273,6 @@ class Rules:
             selected_piece (str): String with the selected piece
             selected_piece_row (int): integer with the selected piece row
             selected_piece_col (int): integer with the selected piece col
-            selected_square_row (int): selected square row int
             selected_square_col (int): selected square col int
             board (list): array of arrays with the current state of the board.
             color_slice (slice): Slice object to access the color of the piece.
@@ -287,14 +285,14 @@ class Rules:
             rook_direction = -1
             king_direction = 2
             iter_direction = 1
-            self.castle = 'Short'
+            self.castle = "Short"
         else:
             squares_move = 3
             rook_pos = -4
             rook_direction = 1
             king_direction = -2
             iter_direction = -1
-            self.castle = 'Long'
+            self.castle = "Long"
 
         if selected_piece[color_slice] == "White":
             starting_row = 7
@@ -334,7 +332,7 @@ class Rules:
         piece_slice: slice,
         possible_passant: bool,
         possible_passant_col: int,
-        turn: str
+        turn: str,
     ):
         """This is the function that will call the functions that contain the logic to move each piece.
 
@@ -356,7 +354,7 @@ class Rules:
         is_horizontal = False
         is_vertical = False
 
-        if selected_piece[color_slice]!= turn:
+        if selected_piece[color_slice] != turn:
             return
 
         if selected_piece_row == selected_square_row:
@@ -438,7 +436,6 @@ class Rules:
                 selected_piece,
                 selected_piece_row,
                 selected_piece_col,
-                selected_square_row,
                 selected_square_col,
                 board,
                 color_slice,

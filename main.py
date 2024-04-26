@@ -1,7 +1,6 @@
 import pygame
 from sys import exit
 
-from button import Button
 from screens import Main_menu_screen, Play_screen, Bot_screen, Settings_screen
 from board import Chess_board
 from movements import Movements
