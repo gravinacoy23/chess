@@ -255,18 +255,18 @@ class Movements:
                 else:
                     self.move_log_black.append(f"{final_square_chess}")
             elif self.rules.castle is not None:
-                if self.rules.castle == 'Short': 
-                    if selected_piece[self._color_slice] == 'White': 
-                        self.move_log_white.append('O-O')
+                if self.rules.castle == "Short":
+                    if selected_piece[self._color_slice] == "White":
+                        self.move_log_white.append("O-O")
                         self.rules.castle = None
                     else:
-                        self.move_log_black.append('O-O')
-                elif self.rules.castle == 'Long': 
-                    if self.selected_piece[self._color_slice] == 'White': 
-                        self.move_log_white.append('O-O-O')
+                        self.move_log_black.append("O-O")
+                elif self.rules.castle == "Long":
+                    if self.selected_piece[self._color_slice] == "White":
+                        self.move_log_white.append("O-O-O")
                         self.rules.castle = None
-                    else: 
-                        self.move_log_black.append('O-O-O')
+                    else:
+                        self.move_log_black.append("O-O-O")
                         self.rules.castle = None
             else:
                 if selected_piece[self._color_slice] == "White":
