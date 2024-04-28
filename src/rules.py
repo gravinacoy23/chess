@@ -61,16 +61,17 @@ class Rules:
             for diagonal_col in [-1, 1]:
                 capture_col = selected_piece_col + diagonal_col
                 if (
-                    0 <= capture_col < 8
-                    and board[selected_piece_row + direction][capture_col] is not None
+                    not 0 <= capture_col < 8
                 ):
-                    if (
-                        board[selected_piece_row + direction][capture_col][:5]
-                        != player_color
-                    ):
-                        self.valid_moves.append(
-                            (selected_piece_row + direction, capture_col)
-                        )
+                    possible_passant = False
+                elif (
+                    board[selected_piece_row + direction][capture_col] is not None
+                    and board[selected_piece_row + direction][capture_col][:5]
+                    != player_color
+                ):
+                    self.valid_moves.append(
+                        (selected_piece_row + direction, capture_col)
+                    )
                 elif (
                     0 <= capture_col < 8
                     and board[selected_piece_row + direction][capture_col] is None
@@ -81,8 +82,6 @@ class Rules:
                         (selected_piece_row + direction, possible_passant_col)
                     )
                     self.en_passant = True
-                else:
-                    possible_passant = False
 
     def _define_horizontal_vertical_moves(
         self,
@@ -134,22 +133,22 @@ class Rules:
             elif is_vertical:
                 current_square = (current_index, fixed_index)
 
-            if 0 <= current_index < 8:
-                if is_horizontal:
-                    piece_at_square = board[fixed_index][current_index]
-                elif is_vertical:
-                    piece_at_square = board[current_index][fixed_index]
+            if not 0 <= current_index < 8:
+                return
+            
+            elif is_horizontal:
+                piece_at_square = board[fixed_index][current_index]
+            elif is_vertical:
+                piece_at_square = board[current_index][fixed_index]
 
-                if piece_at_square is None:
-                    self.valid_moves.append(current_square)
-                    if selected_piece[piece_slice] == "King":
-                        return
-                elif piece_at_square[color_slice] == selected_piece[color_slice]:
-                    break
-                elif piece_at_square[color_slice] != selected_piece[color_slice]:
-                    self.valid_moves.append(current_square)
+            if piece_at_square is None:
+                self.valid_moves.append(current_square)
+                if selected_piece[piece_slice] == "King":
                     return
-            else:
+            elif piece_at_square[color_slice] == selected_piece[color_slice]:
+                break
+            elif piece_at_square[color_slice] != selected_piece[color_slice]:
+                self.valid_moves.append(current_square)
                 return
 
     def _define_diagonal_moves(
@@ -207,21 +206,22 @@ class Rules:
             current_row += direction_row
             current_col += direction_col
 
-            if 0 <= current_row < 8 and 0 <= current_col < 8:
-                piece_at_square = board[current_row][current_col]
-                if board[current_row][current_col] is None:
-                    self.valid_moves.append((current_row, current_col))
-                    if selected_piece[piece_slice] == "King":
-                        return
-                elif (
-                    board[current_row][current_col][color_slice]
-                    == selected_piece[color_slice]
-                ):
+            if not 0 <= current_row < 8 and not 0 <= current_col < 8:
+                return
+            
+            piece_at_square = board[current_row][current_col]
+            
+            if board[current_row][current_col] is None:
+                self.valid_moves.append((current_row, current_col))
+                if selected_piece[piece_slice] == "King":
                     return
-                elif piece_at_square[color_slice] != selected_piece[color_slice]:
-                    self.valid_moves.append((current_row, current_col))
-                    return
-            else:
+            elif (
+                board[current_row][current_col][color_slice]
+                == selected_piece[color_slice]
+            ):
+                return
+            elif piece_at_square[color_slice] != selected_piece[color_slice]:
+                self.valid_moves.append((current_row, current_col))
                 return
 
     def _define_knight_moves(
@@ -245,20 +245,19 @@ class Rules:
             for col in [-2, -1, 1, 2]:
                 current_row = selected_piece_row + row
                 current_col = selected_piece_col + col
-                if 0 <= current_row < 8 and 0 <= current_col < 8:
-                    if abs(row) == abs(col):
-                        continue
-                    elif board[current_row][current_col] is None:
-                        self.valid_moves.append((current_row, current_col))
-                    elif (
-                        board[current_row][current_col][color_slice]
-                        == selected_piece[color_slice]
-                    ):
-                        continue
-                    else:
-                        self.valid_moves.append((current_row, current_col))
-                else:
+                if not 0 <= current_row < 8 or not 0 <= current_col < 8:
                     continue
+                elif abs(row) == abs(col):
+                    continue
+                elif board[current_row][current_col] is None:
+                    self.valid_moves.append((current_row, current_col))
+                elif (
+                    board[current_row][current_col][color_slice]
+                    == selected_piece[color_slice]
+                ):
+                    continue
+                else:
+                    self.valid_moves.append((current_row, current_col))
 
     def _castle(
         self,
