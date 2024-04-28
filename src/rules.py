@@ -454,6 +454,6 @@ class Rules:
             selected_square (tuple): tuple that contains the position on the board of the selected square.
 
         Returns:
-            a boolean value stating if it is within the list of valid moves.
+            a boolean value stating if it is within the list of valid moves for the piece.
         """
         return selected_square in self.valid_moves
