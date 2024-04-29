@@ -97,6 +97,11 @@ class Movements:
         return row, col
 
     def _regular_movement(self, board: list) -> None:
+        """The purpose of this function is to make a regular move, AKA not a capture.
+
+        Args:
+            board (list): Current state of the board
+        """
         row_init, col_init = self.selected_piece_pos
         row_to_move, col_to_move = self.selected_square
         board[row_to_move][col_to_move] = self.selected_piece
@@ -128,7 +133,12 @@ class Movements:
         else:
             self.turn = "White"
 
-    def _capture(self,board : list) -> None:
+    def _capture(self, board: list) -> None:
+        """The purpose of this function is to successfully handle capture.
+
+        Args:
+            board (list): Current state of the board
+        """
         self.piece_is_captured = True
         row_init, col_init = self.selected_piece_pos
         row_to_move, col_to_move = self.selected_square
@@ -149,6 +159,11 @@ class Movements:
             self.turn = "White"
 
     def _passant(self, board: list) -> None:
+        """Handles En passant captures
+
+        Args:
+            board (list): Current state of the board
+        """
         self.selected_piece = self.selected_piece_passant
         row_to_move, col_to_move = self.selected_square
         if self.selected_piece[self._color_slice] == "White":
