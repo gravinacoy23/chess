@@ -57,43 +57,10 @@ class Movements:
             tuple: return a tuple with the conversion of the position of the mouse.
         """
         row, col = position
-
-        match row:
-            case _ if 198 <= row < 285:
-                row = 0
-            case _ if 285 <= row < 373:
-                row = 1
-            case _ if 373 <= row < 460:
-                row = 2
-            case _ if 460 <= row < 547:
-                row = 3
-            case _ if 547 <= row < 635:
-                row = 4
-            case _ if 635 <= row < 721:
-                row = 5
-            case _ if 721 <= row < 808:
-                row = 6
-            case _ if 808 <= row < 896:
-                row = 7
-
-        match col:
-            case _ if 52 <= col < 135:
-                col = 0
-            case _ if 135 <= col < 220:
-                col = 1
-            case _ if 220 <= col < 304:
-                col = 2
-            case _ if 304 <= col < 388:
-                col = 3
-            case _ if 388 <= col < 473:
-                col = 4
-            case _ if 473 <= col < 556:
-                col = 5
-            case _ if 556 <= col < 640:
-                col = 6
-            case _ if 640 <= col < 724:
-                col = 7
-
+        cell_width = 83
+        cell_height = 87
+        row = min(max(0, (row - 198) // cell_height), 7)
+        col = min(max(0, (col - 52) // cell_width), 7)
         return row, col
 
     def _regular_movement(self, board: list) -> None:
