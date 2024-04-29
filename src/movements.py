@@ -212,10 +212,9 @@ class Movements:
                 if self.selected_piece_pos == self.selected_square:
                     self.selected_piece = None
                     self.selected_square_owner = None
-                    selecting_piece = True
 
                 if self.selected_square_owner is None:
-                   self._regular_movement(board)
+                    self._regular_movement(board)
                 elif (
                     self.selected_piece[self._color_slice]
                     != self.selected_square_owner[self._color_slice]
