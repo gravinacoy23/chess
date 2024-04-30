@@ -128,18 +128,17 @@ class Rules:
         while current_index != target_index + direction:
             current_index += direction
 
-            if is_horizontal:
-                current_square = (fixed_index, current_index)
-            elif is_vertical:
-                current_square = (current_index, fixed_index)
-
             if not 0 <= current_index < 8:
                 return
             
             elif is_horizontal:
+                current_square = (fixed_index, current_index)
                 piece_at_square = board[fixed_index][current_index]
             elif is_vertical:
+                current_square = (current_index, fixed_index)
                 piece_at_square = board[current_index][fixed_index]
+            else:
+                return
 
             if piece_at_square is None:
                 self.valid_moves.append(current_square)
@@ -320,9 +319,8 @@ class Rules:
                         return
                 self.valid_moves.append((selected_piece_row, selected_square_col))
                 board[selected_piece_row][selected_piece_col + rook_pos] = None
-                board[selected_piece_row][
-                    selected_square_col + rook_direction
-                ] = f"{selected_piece[color_slice]} Rook"
+                board[selected_piece_row][selected_square_col + rook_direction] = f"{selected_piece[color_slice]} Rook"
+                self.castle = castle_dir
 
     def define_valid_moves(
         self,
