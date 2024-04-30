@@ -285,14 +285,14 @@ class Rules:
             rook_direction = -1
             king_direction = 2
             iter_direction = 1
-            self.castle = "Short"
+            castle_dir = "Short"
         else:
             squares_move = 3
             rook_pos = -4
             rook_direction = 1
             king_direction = -2
             iter_direction = -1
-            self.castle = "Long"
+            castle_dir = "Long"
 
         if selected_piece[color_slice] == "White":
             starting_row = 7
