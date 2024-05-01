@@ -14,6 +14,8 @@ class Movements:
         self.piece_is_captured = False
         self._color_slice = slice(None, 5)
         self._piece_slice = slice(6, None)
+        self.white_king_pos = (7, 4)
+        self.black_king_pos = (0, 4)
         self.possible_passant = False
         self.possible_passant_col = None
         self.passant_to_capture = None
@@ -146,6 +148,34 @@ class Movements:
         self.selected_piece = None
         self.rules.en_passant = False
 
+    def _check(self, board: list, king_pos: tuple) -> bool:
+        """
+        
+        :param board:
+        :return:
+        """
+        for row in range(0, 8):
+            for col in range(0, 8):
+                if board[row][col] is None:
+                    continue
+                self.rules.define_valid_moves(
+                    board[row][col],
+                    (row, col),
+                    king_pos,
+                    board,
+                    self._color_slice,
+                    self._piece_slice,
+                    self.possible_passant,
+                    self.possible_passant_col,
+                    self.turn
+                )
+                if board[row][col][self._piece_slice] == 'Bishop':
+                    print(self.rules.valid_moves)
+                    print(king_pos)
+                if self.rules.valid_move(king_pos):
+                    return True
+        return False
+        
     def move_piece(self, board: list) -> None:
         """This contains the logic to move a piece somewhat raw, very few rules.
         rules included: The turn of the player, you can only play on your turn. You can not move the piece to the same
@@ -178,6 +208,16 @@ class Movements:
                 # if self.selected_piece_pos == self.selected_square:
                 #     self.selected_piece = None
                 #     self.selected_square_owner = None
+                if self.turn == 'White':
+                    print(self._check(board, self.white_king_pos))
+                else:
+                    print(self._check(board, self.black_king_pos))
+                
+                if self.selected_piece == 'White King':
+                    self.white_king_pos = self.selected_square
+                elif self.selected_piece == 'Black King':
+                    self.black_king_pos = self.selected_square
+                
                 if self.selected_square_owner is None:
                     self.counter += 1
                     self._regular_movement(board)
