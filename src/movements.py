@@ -176,10 +176,10 @@ class Movements:
                 and self.selected_piece[self._color_slice] == "Black"
             ):
                 self.counter += 1
-                if self.selected_piece_pos == self.selected_square:
-                    self.selected_piece = None
-                    self.selected_square_owner = None
 
+                # if self.selected_piece_pos == self.selected_square:
+                #     self.selected_piece = None
+                #     self.selected_square_owner = None
                 if self.selected_square_owner is None:
                     self._regular_movement(board)
                 elif (
