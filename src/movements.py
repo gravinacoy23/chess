@@ -8,6 +8,7 @@ class Movements:
         self.selected_square_owner = None
         self.selected_square = None
         self.previous_pos = None
+        self.check_turn = None
         self.turn = "White"
         self.move_log_white = list()
         self.move_log_black = list()
@@ -167,11 +168,8 @@ class Movements:
                     self._piece_slice,
                     self.possible_passant,
                     self.possible_passant_col,
-                    self.turn
+                    self.check_turn,
                 )
-                if board[row][col][self._piece_slice] == 'Bishop':
-                    print(self.rules.valid_moves)
-                    print(king_pos)
                 if self.rules.valid_move(king_pos):
                     return True
         return False
@@ -209,9 +207,15 @@ class Movements:
                 #     self.selected_piece = None
                 #     self.selected_square_owner = None
                 if self.turn == 'White':
-                    print(self._check(board, self.white_king_pos))
+                    self.check_turn = 'Black'
+                    if self._check(board, self.white_king_pos):
+                        print('you are in check')
+                        return
                 else:
-                    print(self._check(board, self.black_king_pos))
+                    self.check_turn = 'White'
+                    if self._check(board, self.black_king_pos):
+                        print('you are in check')
+                        return
                 
                 if self.selected_piece == 'White King':
                     self.white_king_pos = self.selected_square
