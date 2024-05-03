@@ -227,18 +227,13 @@ class Movements:
                 if self.turn == 'White':
                     self.check_turn = 'Black'
                     if self._check(board, self.white_king_pos):
-                        print('you are in check')
-                        return
+                        if not self._out_of_check(board, self.white_king_pos):
+                            return
                 else:
                     self.check_turn = 'White'
                     if self._check(board, self.black_king_pos):
-                        print('you are in check')
-                        return
-                
-                if self.selected_piece == 'White King':
-                    self.white_king_pos = self.selected_square
-                elif self.selected_piece == 'Black King':
-                    self.black_king_pos = self.selected_square
+                        if not self._out_of_check(board, self.black_king_pos):
+                            return
                 
                 if self.selected_square_owner is None:
                     self.counter += 1
