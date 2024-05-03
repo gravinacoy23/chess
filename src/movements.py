@@ -254,6 +254,18 @@ class Movements:
                     self.selected_piece[self._color_slice]
                     != self.selected_square_owner[self._color_slice]
                 ):
+                    if self.turn == 'White':
+                        self.check_turn = 'Black'
+                        if not self._out_of_check(board, self.white_king_pos):
+                            return
+                    else:
+                        self.check_turn = 'White'
+                        if not self._out_of_check(board, self.black_king_pos):
+                            return
+                    if self.selected_piece == 'White King':
+                        self.white_king_pos = self.selected_square
+                    elif self.selected_piece == 'Black King':
+                        self.black_king_pos = self.selected_square
                     self.counter += 1
                     self._capture(board)
                     return
