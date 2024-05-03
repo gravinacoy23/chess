@@ -1,4 +1,5 @@
 from src.rules import Rules
+from copy import deepcopy
 
 
 class Movements:
@@ -173,6 +174,23 @@ class Movements:
                 if self.rules.valid_move(king_pos):
                     return True
         return False
+        
+    def _out_of_check(self, board, king_pos):
+        """
+        
+        :param board:
+        :param king_pos:
+        :return:
+        """
+        board_check = deepcopy(board)
+        king_pos_copy = deepcopy(king_pos)
+        
+        if self.selected_piece[self._piece_slice] == 'King':
+            king_pos_copy = self.selected_square
+        
+        board_check[self.selected_piece_pos[0]][self.selected_piece_pos[1]] = None
+        board_check[self.selected_square[0]][self.selected_square[1]] = self.selected_piece
+        return False if self._check(board_check, king_pos_copy) else True
         
     def move_piece(self, board: list) -> None:
         """This contains the logic to move a piece somewhat raw, very few rules.
