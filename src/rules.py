@@ -205,7 +205,7 @@ class Rules:
             current_row += direction_row
             current_col += direction_col
 
-            if not 0 <= current_row < 8 and not 0 <= current_col < 8:
+            if not 0 <= current_row < 8 or not 0 <= current_col < 8:
                 return
             
             piece_at_square = board[current_row][current_col]
