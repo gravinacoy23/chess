@@ -77,6 +77,12 @@ class Movements:
         row_to_move, col_to_move = self.selected_square
         board[row_to_move][col_to_move] = self.selected_piece
         board[row_init][col_init] = None
+        
+        if self.rules.castle is not None:
+            board[self.selected_piece_pos[0]][self.selected_piece_pos[1] + self.rules.rook_pos] = None
+            board[self.selected_piece_pos[0]][self.selected_square[1] + self.rules.rook_direction] \
+                = f"{self.selected_piece[self._color_slice]} Rook"
+        
         if not self.rules.en_passant:
             self.convert_move_to_chess_notation(
                 self.selected_piece_pos,
@@ -94,8 +100,10 @@ class Movements:
                 self.possible_passant_col = col_init
         else:
             self.possible_passant = False
+
         if self.counter != self.enpassant_counter:
             self.possible_passant = False
+
         self.selected_piece_passant = self.selected_piece
         self.selected_piece = None
         self.selected_square_owner = None
@@ -224,16 +232,6 @@ class Movements:
                 # if self.selected_piece_pos == self.selected_square:
                 #     self.selected_piece = None
                 #     self.selected_square_owner = None
-                if self.turn == 'White':
-                    self.check_turn = 'Black'
-                    if self._check(board, self.white_king_pos):
-                        if not self._out_of_check(board, self.white_king_pos):
-                            return
-                else:
-                    self.check_turn = 'White'
-                    if self._check(board, self.black_king_pos):
-                        if not self._out_of_check(board, self.black_king_pos):
-                            return
                 
                 if self.selected_square_owner is None:
                     if self.turn == 'White':

@@ -281,15 +281,15 @@ class Rules:
         """
         if selected_piece_col < selected_square_col:
             squares_move = 2
-            rook_pos = 3
-            rook_direction = -1
+            self.rook_pos = 3
+            self.rook_direction = -1
             king_direction = 2
             iter_direction = 1
             castle_dir = "Short"
         else:
             squares_move = 3
-            rook_pos = -4
-            rook_direction = 1
+            self.rook_pos = -4
+            self.rook_direction = 1
             king_direction = -2
             iter_direction = -1
             castle_dir = "Long"
@@ -302,7 +302,7 @@ class Rules:
         if selected_piece_row == starting_row:
             if (
                 selected_piece_col + king_direction == selected_square_col
-                and board[selected_piece_row][selected_piece_col + rook_pos][
+                and board[selected_piece_row][selected_piece_col + self.rook_pos][
                     piece_slice
                 ]
                 == "Rook"
@@ -318,8 +318,6 @@ class Rules:
                     ):
                         return
                 self.valid_moves.append((selected_piece_row, selected_square_col))
-                board[selected_piece_row][selected_piece_col + rook_pos] = None
-                board[selected_piece_row][selected_square_col + rook_direction] = f"{selected_piece[color_slice]} Rook"
                 self.castle = castle_dir
 
     def define_valid_moves(
