@@ -331,6 +331,7 @@ class Rules:
         possible_passant: bool,
         possible_passant_col: int,
         turn: str,
+        checking: bool,
     ):
         """This is the function that will call the functions that contain the logic to move each piece.
 
@@ -431,7 +432,7 @@ class Rules:
                 color_slice,
                 piece_slice,
             )
-        if selected_piece[piece_slice] == "King":
+        if selected_piece[piece_slice] == "King" and not checking:
             self._castle(
                 selected_piece,
                 selected_piece_row,

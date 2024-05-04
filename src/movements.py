@@ -178,6 +178,7 @@ class Movements:
                     self.possible_passant,
                     self.possible_passant_col,
                     self.check_turn,
+                    checking=True
                 )
                 if self.rules.valid_move(king_pos):
                     return True
@@ -210,6 +211,20 @@ class Movements:
         Args:
             board (List): Array of arrays.
         """
+        checking = False
+        if self.turn == 'White':
+            self.check_turn = 'Black'
+            if self._check(board, self.white_king_pos):
+                checking = True
+                if not self._out_of_check(board, self.white_king_pos):
+                    return
+        else:
+            self.check_turn = 'White'
+            if self._check(board, self.black_king_pos):
+                checking = True
+                if not self._out_of_check(board, self.black_king_pos):
+                    return
+        
         self.rules.define_valid_moves(
             self.selected_piece,
             self.selected_piece_pos,
@@ -220,6 +235,7 @@ class Movements:
             self.possible_passant,
             self.possible_passant_col,
             self.turn,
+            checking,
         )
         if self.rules.valid_move(self.selected_square):
             if (
