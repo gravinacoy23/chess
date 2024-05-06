@@ -158,10 +158,16 @@ class Movements:
         self.rules.en_passant = False
 
     def _check(self, board: list, king_pos: tuple) -> bool:
-        """
-        
-        :param board:
-        :return:
+        """This function checks whether the king is currently on check given the king pos and a given board. It calls
+        the define valid moves function for all the pieces in the board and sees if the king pos is contained in any of
+        the valid moves.
+
+        Args:
+            board (list): 2d array with the current state of the board
+            king_pos (tuple): Position of the king on the board
+
+        Returns:
+            bool: True if the king is in check, False otherwise
         """
         for row in range(0, 8):
             for col in range(0, 8):
@@ -183,12 +189,16 @@ class Movements:
                     return True
         return False
         
-    def _out_of_check(self, board, king_pos):
-        """
-        
-        :param board:
-        :param king_pos:
-        :return:
+    def _out_of_check(self, board: list, king_pos: tuple) -> bool:
+        """This function checks if after a given move the king is out of check, making a copy of the board and a copy of
+        the king pos
+
+        Args:
+            board (list): 2d array with the current state of the board
+            king_pos (tuple): Position of the king on the board
+
+        Returns:
+            bool: True if the move puts the king to safety, false otherwise
         """
         board_check = deepcopy(board)
         king_pos_copy = deepcopy(king_pos)
