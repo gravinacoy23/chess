@@ -51,8 +51,7 @@ class Movements:
 
     @staticmethod
     def _convert_mouse_pos_to_board(position: tuple) -> tuple:
-        """This is a match case statement to match the position of the mouse to a row col so that we can work with it on
-        the functions of this class.
+        """Math expression that converts the position of the mouse to one of the positions in the 2d array board
 
         Args:
             position (Tuple): Position of the mouse, defined on main.py

@@ -115,9 +115,8 @@ class ChessBoard:
                         screen.blit(self.king_image_white, piece_pos)
 
     def update_board(self, screen):
-        """_summary_
-        The purpose of this function is to update the board depending on the current state of matrix (array of arrays)
-        self.board.
+        """The purpose of this function is to update the board depending on the current state of matrix
+        (array of arrays) self.board.
 
         Args:
             screen (Play_screen or Bot_screen): this argument is intended to be received on the main file and these are
