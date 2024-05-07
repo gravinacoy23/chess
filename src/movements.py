@@ -191,7 +191,7 @@ class Movements:
         
     def _out_of_check(self, board: list, king_pos: tuple) -> bool:
         """This function checks if after a given move the king is out of check, making a copy of the board and a copy of
-        the king pos
+        the king position
 
         Args:
             board (list): 2d array with the current state of the board
