@@ -60,9 +60,7 @@ class Rules:
         ):
             for diagonal_col in [-1, 1]:
                 capture_col = selected_piece_col + diagonal_col
-                if (
-                    not 0 <= capture_col < 8
-                ):
+                if not 0 <= capture_col < 8:
                     possible_passant = False
                 elif (
                     board[selected_piece_row + direction][capture_col] is not None
@@ -130,7 +128,7 @@ class Rules:
 
             if not 0 <= current_index < 8:
                 return
-            
+
             elif is_horizontal:
                 current_square = (fixed_index, current_index)
                 piece_at_square = board[fixed_index][current_index]
@@ -207,9 +205,9 @@ class Rules:
 
             if not 0 <= current_row < 8 or not 0 <= current_col < 8:
                 return
-            
+
             piece_at_square = board[current_row][current_col]
-            
+
             if board[current_row][current_col] is None:
                 self.valid_moves.append((current_row, current_col))
                 if selected_piece[piece_slice] == "King":

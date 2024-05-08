@@ -76,12 +76,15 @@ class Movements:
         row_to_move, col_to_move = self.selected_square
         board[row_to_move][col_to_move] = self.selected_piece
         board[row_init][col_init] = None
-        
+
         if self.rules.castle is not None:
-            board[self.selected_piece_pos[0]][self.selected_piece_pos[1] + self.rules.rook_pos] = None
-            board[self.selected_piece_pos[0]][self.selected_square[1] + self.rules.rook_direction] \
-                = f"{self.selected_piece[self._color_slice]} Rook"
-        
+            board[self.selected_piece_pos[0]][
+                self.selected_piece_pos[1] + self.rules.rook_pos
+            ] = None
+            board[self.selected_piece_pos[0]][
+                self.selected_square[1] + self.rules.rook_direction
+            ] = f"{self.selected_piece[self._color_slice]} Rook"
+
         if not self.rules.en_passant:
             self.convert_move_to_chess_notation(
                 self.selected_piece_pos,
@@ -90,10 +93,7 @@ class Movements:
                 self.piece_is_captured,
             )
         if self.selected_piece[self._piece_slice] == "Pawn":
-            if (
-                row_to_move + 2 == row_init
-                or row_to_move - 2 == row_init
-            ):
+            if row_to_move + 2 == row_init or row_to_move - 2 == row_init:
                 self.possible_passant = True
                 self.enpassant_counter = self.counter
                 self.possible_passant_col = col_init
@@ -183,12 +183,12 @@ class Movements:
                     self.possible_passant,
                     self.possible_passant_col,
                     self.check_turn,
-                    checking=True
+                    checking=True,
                 )
                 if self.rules.valid_move(king_pos):
                     return True
         return False
-        
+
     def _out_of_check(self, board: list, king_pos: tuple) -> bool:
         """This function checks if after a given move the king is out of check, making a copy of the board and a copy of
         the king position
@@ -202,14 +202,16 @@ class Movements:
         """
         board_check = deepcopy(board)
         king_pos_copy = deepcopy(king_pos)
-        
-        if self.selected_piece[self._piece_slice] == 'King':
+
+        if self.selected_piece[self._piece_slice] == "King":
             king_pos_copy = self.selected_square
-        
+
         board_check[self.selected_piece_pos[0]][self.selected_piece_pos[1]] = None
-        board_check[self.selected_square[0]][self.selected_square[1]] = self.selected_piece
+        board_check[self.selected_square[0]][
+            self.selected_square[1]
+        ] = self.selected_piece
         return False if self._check(board_check, king_pos_copy) else True
-        
+
     def move_piece(self, board: list) -> None:
         """This contains the logic to move a piece somewhat raw, very few rules.
         rules included: The turn of the player, you can only play on your turn. You can not move the piece to the same
@@ -221,19 +223,19 @@ class Movements:
             board (List): Array of arrays.
         """
         checking = False
-        if self.turn == 'White':
-            self.check_turn = 'Black'
+        if self.turn == "White":
+            self.check_turn = "Black"
             if self._check(board, self.white_king_pos):
                 checking = True
                 if not self._out_of_check(board, self.white_king_pos):
                     return
         else:
-            self.check_turn = 'White'
+            self.check_turn = "White"
             if self._check(board, self.black_king_pos):
                 checking = True
                 if not self._out_of_check(board, self.black_king_pos):
                     return
-        
+
         self.rules.define_valid_moves(
             self.selected_piece,
             self.selected_piece_pos,
@@ -257,19 +259,19 @@ class Movements:
                 # if self.selected_piece_pos == self.selected_square:
                 #     self.selected_piece = None
                 #     self.selected_square_owner = None
-                
+
                 if self.selected_square_owner is None:
-                    if self.turn == 'White':
-                        self.check_turn = 'Black'
+                    if self.turn == "White":
+                        self.check_turn = "Black"
                         if not self._out_of_check(board, self.white_king_pos):
                             return
                     else:
-                        self.check_turn = 'White'
+                        self.check_turn = "White"
                         if not self._out_of_check(board, self.black_king_pos):
                             return
-                    if self.selected_piece == 'White King':
+                    if self.selected_piece == "White King":
                         self.white_king_pos = self.selected_square
-                    elif self.selected_piece == 'Black King':
+                    elif self.selected_piece == "Black King":
                         self.black_king_pos = self.selected_square
                     self.counter += 1
                     self._regular_movement(board)
@@ -277,22 +279,22 @@ class Movements:
                     self.selected_piece[self._color_slice]
                     != self.selected_square_owner[self._color_slice]
                 ):
-                    if self.turn == 'White':
-                        self.check_turn = 'Black'
+                    if self.turn == "White":
+                        self.check_turn = "Black"
                         if not self._out_of_check(board, self.white_king_pos):
                             return
                     else:
-                        self.check_turn = 'White'
+                        self.check_turn = "White"
                         if not self._out_of_check(board, self.black_king_pos):
                             return
-                    if self.selected_piece == 'White King':
+                    if self.selected_piece == "White King":
                         self.white_king_pos = self.selected_square
-                    elif self.selected_piece == 'Black King':
+                    elif self.selected_piece == "Black King":
                         self.black_king_pos = self.selected_square
                     self.counter += 1
                     self._capture(board)
                     return
-                
+
                 if self.rules.en_passant:
                     self._passant(board)
 
@@ -361,10 +363,6 @@ class Movements:
             self.rules.castle = None
         else:
             if selected_piece[self._color_slice] == "White":
-                self.move_log_white.append(
-                    f"{selected_piece[6]}{final_square_chess}"
-                )
+                self.move_log_white.append(f"{selected_piece[6]}{final_square_chess}")
             else:
-                self.move_log_black.append(
-                    f"{selected_piece[6]}{final_square_chess}"
-                )
+                self.move_log_black.append(f"{selected_piece[6]}{final_square_chess}")
